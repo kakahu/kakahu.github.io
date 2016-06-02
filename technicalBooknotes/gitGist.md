@@ -1,7 +1,7 @@
 #Git 基本操作
-[返回首页](http://github.com/kakahu/blog.io/index.html)
+[返回首页](../index.html)
 
-[返回技术书籍笔记](http://github.com/kakahu/blog.io/techincalBooknotes/technicalBooknotesIndex.html)
+[返回技术书籍笔记](./technicalBooknotesIndex.html)
 
 git本地新建目录，push到远程仓库的方法：
 
@@ -19,6 +19,8 @@ p.s. : 需要先在github手动创建repo
 Git是一个仓库，在本仓库及子目录下的文件才可以被检索到。
 
 git add命令可以将文件加入到仓库中，例子：git add readme.txt
+
+git add —all
 
 git commit 讲文件提交到库，例子：git commit -m “wrote a readme file."
 -m 后面表示提交的说明。
