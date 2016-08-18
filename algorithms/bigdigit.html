@@ -1,0 +1,273 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<style>
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote {
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", Arial, sans-serif;
+    font-size: 13px;
+    line-height: 18px;
+    color: #737373;
+    background-color: white;
+    margin: 10px 13px 10px 13px;
+}
+table {
+	margin: 10px 0 15px 0;
+	border-collapse: collapse;
+}
+td,th {	
+	border: 1px solid #ddd;
+	padding: 3px 10px;
+}
+th {
+	padding: 5px 10px;	
+}
+
+a {
+    color: #0069d6;
+}
+a:hover {
+    color: #0050a3;
+    text-decoration: none;
+}
+a img {
+    border: none;
+}
+p {
+    margin-bottom: 9px;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #404040;
+    line-height: 36px;
+}
+h1 {
+    margin-bottom: 18px;
+    font-size: 30px;
+}
+h2 {
+    font-size: 24px;
+}
+h3 {
+    font-size: 18px;
+}
+h4 {
+    font-size: 16px;
+}
+h5 {
+    font-size: 14px;
+}
+h6 {
+    font-size: 13px;
+}
+hr {
+    margin: 0 0 19px;
+    border: 0;
+    border-bottom: 1px solid #ccc;
+}
+blockquote {
+    padding: 13px 13px 21px 15px;
+    margin-bottom: 18px;
+    font-family:georgia,serif;
+    font-style: italic;
+}
+blockquote:before {
+    content:"\201C";
+    font-size:40px;
+    margin-left:-10px;
+    font-family:georgia,serif;
+    color:#eee;
+}
+blockquote p {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 18px;
+    margin-bottom: 0;
+    font-style: italic;
+}
+code, pre {
+    font-family: Monaco, Andale Mono, Courier New, monospace;
+}
+code {
+    background-color: #fee9cc;
+    color: rgba(0, 0, 0, 0.75);
+    padding: 1px 3px;
+    font-size: 12px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+pre {
+    display: block;
+    padding: 14px;
+    margin: 0 0 18px;
+    line-height: 16px;
+    font-size: 11px;
+    border: 1px solid #d9d9d9;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+pre code {
+    background-color: #fff;
+    color:#737373;
+    font-size: 11px;
+    padding: 0;
+}
+sup {
+    font-size: 0.83em;
+    vertical-align: super;
+    line-height: 0;
+}
+* {
+	-webkit-print-color-adjust: exact;
+}
+@media screen and (min-width: 914px) {
+    body {
+        width: 854px;
+        margin:10px auto;
+    }
+}
+@media print {
+	body,code,pre code,h1,h2,h3,h4,h5,h6 {
+		color: black;
+	}
+	table, pre {
+		page-break-inside: avoid;
+	}
+}
+</style>
+<title>大数的数学运算</title>
+
+</head>
+<body>
+<h1>大数的数学运算</h1>
+
+<p><a href="../index.html">返回首页</a></p>
+
+<p><a href="./algorithmsIndex.html">返回算法分类分析</a></p>
+
+<h3>第一题 Add Binary</h3>
+
+<p>Given two binary strings, return their sum (also a binary string).</p>
+
+<p>For example,</p>
+
+<p>a = "11"</p>
+
+<p>b = "1"</p>
+
+<p>Return "100".</p>
+
+<h3>解法</h3>
+
+<p>注意这里范例式的处理，没有去根据长短进行分类讨论，而是有效地用一个循环处理了所有情况。对字符串的处理也值得学习。</p>
+
+<pre><code>class Solution(object):
+
+def addBinary(self, a, b):
+
+    """
+
+    :type a: str
+
+    :type b: str
+
+    :rtype: str
+
+    """
+
+    pa, pb, c, res = len(a) - 1, len(b) - 1, 0, ''
+
+    while pa &gt;= 0 or pb &gt;= 0 or c &gt; 0:
+
+        c += 1 if pa &gt;= 0 and a[pa] == '1' else 0
+
+        c += 1 if pb &gt;= 0 and b[pb] == '1' else 0
+
+        res = str(c % 2) + res
+
+        pa, pb, c = pa - 1, pb - 1, c / 2
+
+    return res
+</code></pre>
+
+<h3>第二题 Add Two Numbers</h3>
+
+<p>You are given two linked lists representing two non-negative numbers. The digits are stored in reverse order and each of their nodes contain a single digit. Add the two numbers and return it as a linked list.</p>
+
+<p>Input: (2 -> 4 -> 3) + (5 -> 6 -> 4)</p>
+
+<p>Output: 7 -> 0 -> 8</p>
+
+<h3>解法</h3>
+
+<p>解法和上面一题一样，只是这次在链表上实现了。</p>
+
+<pre><code># Definition for singly-linked list.
+
+# class ListNode(object):
+
+#     def __init__(self, x):
+
+#         self.val = x
+
+#         self.next = None
+
+
+
+class Solution(object):
+
+def addTwoNumbers(self, l1, l2):
+
+    """
+
+    :type l1: ListNode
+
+    :type l2: ListNode
+
+    :rtype: ListNode
+
+    """
+
+    c = 0
+
+    head = ListNode(0)
+
+    l = head
+
+    while not l1 == None or not l2 == None or not c == 0:
+
+        c += l1.val if not l1 == None else 0
+
+        c += l2.val if not l2 == None else 0
+
+        l.next = ListNode(c%10)
+
+        l = l.next
+
+        l1 = l1.next if not l1 == None else l1
+
+        l2 = l2.next if not l2 == None else l2
+
+        c = c / 10
+
+    return head.next
+</code></pre>
+</body>
+</html>
