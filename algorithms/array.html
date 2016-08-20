@@ -1,0 +1,568 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<style>
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote {
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", Arial, sans-serif;
+    font-size: 13px;
+    line-height: 18px;
+    color: #737373;
+    background-color: white;
+    margin: 10px 13px 10px 13px;
+}
+table {
+	margin: 10px 0 15px 0;
+	border-collapse: collapse;
+}
+td,th {	
+	border: 1px solid #ddd;
+	padding: 3px 10px;
+}
+th {
+	padding: 5px 10px;	
+}
+
+a {
+    color: #0069d6;
+}
+a:hover {
+    color: #0050a3;
+    text-decoration: none;
+}
+a img {
+    border: none;
+}
+p {
+    margin-bottom: 9px;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #404040;
+    line-height: 36px;
+}
+h1 {
+    margin-bottom: 18px;
+    font-size: 30px;
+}
+h2 {
+    font-size: 24px;
+}
+h3 {
+    font-size: 18px;
+}
+h4 {
+    font-size: 16px;
+}
+h5 {
+    font-size: 14px;
+}
+h6 {
+    font-size: 13px;
+}
+hr {
+    margin: 0 0 19px;
+    border: 0;
+    border-bottom: 1px solid #ccc;
+}
+blockquote {
+    padding: 13px 13px 21px 15px;
+    margin-bottom: 18px;
+    font-family:georgia,serif;
+    font-style: italic;
+}
+blockquote:before {
+    content:"\201C";
+    font-size:40px;
+    margin-left:-10px;
+    font-family:georgia,serif;
+    color:#eee;
+}
+blockquote p {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 18px;
+    margin-bottom: 0;
+    font-style: italic;
+}
+code, pre {
+    font-family: Monaco, Andale Mono, Courier New, monospace;
+}
+code {
+    background-color: #fee9cc;
+    color: rgba(0, 0, 0, 0.75);
+    padding: 1px 3px;
+    font-size: 12px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+pre {
+    display: block;
+    padding: 14px;
+    margin: 0 0 18px;
+    line-height: 16px;
+    font-size: 11px;
+    border: 1px solid #d9d9d9;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+pre code {
+    background-color: #fff;
+    color:#737373;
+    font-size: 11px;
+    padding: 0;
+}
+sup {
+    font-size: 0.83em;
+    vertical-align: super;
+    line-height: 0;
+}
+* {
+	-webkit-print-color-adjust: exact;
+}
+@media screen and (min-width: 914px) {
+    body {
+        width: 854px;
+        margin:10px auto;
+    }
+}
+@media print {
+	body,code,pre code,h1,h2,h3,h4,h5,h6 {
+		color: black;
+	}
+	table, pre {
+		page-break-inside: avoid;
+	}
+}
+</style>
+<title>数组</title>
+
+</head>
+<body>
+<h1>数组</h1>
+
+<p><a href="../index.html">返回首页</a></p>
+
+<p><a href="./algorithmsIndex.html">返回算法分类分析</a></p>
+
+<h3>第一题 Remove Element</h3>
+
+<p>Given an array and a value, remove all instances of that value in place and return the new length.</p>
+
+<p>Do not allocate extra space for another array, you must do this in place with constant memory.</p>
+
+<p>The order of elements can be changed. It doesn't matter what you leave beyond the new length.</p>
+
+<p>Example:
+Given input array nums = [3,2,2,3], val = 3</p>
+
+<p>Your function should return length = 2, with the first two elements of nums being 2.</p>
+
+<p>Hint:</p>
+
+<p>Try two pointers.</p>
+
+<p>Did you use the property of "the order of elements can be changed"?</p>
+
+<p>What happens when the elements to remove are rare?</p>
+
+<h3>解法</h3>
+
+<pre><code>class Solution(object):
+def removeElement(self, nums, val):
+    """
+    :type nums: List[int]
+    :type val: int
+    :rtype: int
+    """
+    i, j, n = 0, 0, len(nums)
+    while j &lt; n:
+        if nums[j] != val:
+            nums[i] = nums[j]
+            i += 1
+        j += 1
+    return i
+</code></pre>
+
+<h3>第二题 Merge Sorted Array</h3>
+
+<p>Given two sorted integer arrays nums1 and nums2, merge nums2 into nums1 as one sorted array.</p>
+
+<p>Note:
+You may assume that nums1 has enough space (size that is greater or equal to m + n) to hold additional elements from nums2. The number of elements initialized in nums1 and nums2 are m and n respectively.</p>
+
+<h3>解法</h3>
+
+<p>借助两个数组已经排序完成的特性，从后往前排，这样就不需要进行对nums1的移动操作了。</p>
+
+<pre><code>class Solution(object):
+
+def merge(self, nums1, m, nums2, n):
+
+    """
+
+    :type nums1: List[int]
+
+    :type m: int
+
+    :type nums2: List[int]
+
+    :type n: int
+
+    :rtype: void Do not return anything, modify nums1 in-place instead.
+
+    """
+
+    while m &gt; 0 and n &gt; 0:
+
+        if nums1[m-1] &gt; nums2[n-1]:
+
+            nums1[m+n-1] = nums1[m-1]
+
+            m -= 1
+
+        else:
+
+            nums1[m+n-1] = nums2[n-1]
+
+            n -= 1
+
+
+
+    if n &gt; 0:
+
+        nums1[:n] = nums2[:n]
+</code></pre>
+
+<h3>第三题 First Missing Positive</h3>
+
+<p>Given an unsorted integer array, find the first missing positive integer.</p>
+
+<p>For example,</p>
+
+<p>Given [1,2,0] return 3,</p>
+
+<p>and [3,4,-1,1] return 2.</p>
+
+<p>Your algorithm should run in O(n) time and uses constant space.</p>
+
+<h3>解法</h3>
+
+<p>思路还是比较简单的，准备一个数组来标记一个正整数是否出现过。</p>
+
+<pre><code>class Solution(object):
+
+def firstMissingPositive(self, nums):
+
+    """
+
+    :type nums: List[int]
+
+    :rtype: int
+
+    """
+
+    l = [0] * (len(nums) + 1)
+
+    for i in nums:
+
+        if i &gt; 0 and i &lt; len(nums)+1:
+
+            l[i] = 1
+
+    for i in range(1,len(nums)+1):
+
+        if l[i] == 0:
+
+            return i
+
+    return len(nums)+1
+</code></pre>
+
+<h3>第四题 Rotate Image</h3>
+
+<p>You are given an n x n 2D matrix representing an image.</p>
+
+<p>Rotate the image by 90 degrees (clockwise).</p>
+
+<p>Follow up:
+Could you do this in-place?</p>
+
+<h3>解法</h3>
+
+<p>注意数学个性，顺时针转90度，等于先轴对称转再翻转。</p>
+
+<pre><code>class Solution(object):
+
+def rotate(self, matrix):
+
+    """
+
+    :type matrix: List[List[int]]
+
+    :rtype: void Do not return anything, modify matrix in-place instead.
+
+    """
+
+    n = len(matrix)
+
+    for i in range(n):
+
+        for j in range(i+1, n):
+
+            matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
+
+
+
+    for i in range(n):
+
+        for j in range(n/2):
+
+            matrix[i][j], matrix[i][n-1-j] = matrix[i][n-1-j], matrix[i][j]
+</code></pre>
+
+<h3>第五题 3Sum</h3>
+
+<p>Given an array S of n integers, are there elements a, b, c in S such that a + b + c = 0? Find all unique triplets in the array which gives the sum of zero.</p>
+
+<p>Note: The solution set must not contain duplicate triplets.</p>
+
+<p>For example, given array S = [-1, 0, 1, 2, -1, -4],</p>
+
+<pre><code>A solution set is:
+[
+    [-1, 0, 1],
+    [-1, -1, 2]
+]
+</code></pre>
+
+<h3>解法</h3>
+
+<p>这里将三者之和化为两者之和等于第三者的方法很不错。</p>
+
+<pre><code>class Solution(object):
+
+def threeSum(self, nums):
+
+    """
+
+    :type nums: List[int]
+
+    :rtype: List[List[int]]
+
+    """
+
+    nums = sorted(nums)
+
+
+
+    sol = {}
+
+    n = 0
+
+    while n &lt; len(nums) - 2:
+
+        i = n + 1
+
+        j = len(nums) - 1
+
+        s = -1 * nums[n]
+
+
+
+        while i &lt; j:
+
+            if nums[i] + nums[j] &lt; s:
+
+                i += 1
+
+            elif nums[i] + nums[j] &gt; s:
+
+                j -= 1
+
+            else:
+
+                sol[str([nums[n], nums[i], nums[j]])] = [nums[n], nums[i], nums[j]]
+
+                i += 1
+
+
+
+        n += 1
+
+    return sol.values()
+</code></pre>
+
+<h3>第六题 Set Matrix Zeroes</h3>
+
+<p>Given a m x n matrix, if an element is 0, set its entire row and column to 0. Do it in place.</p>
+
+<h3>解法</h3>
+
+<p>这里使用记录的方法，记录下了需要变0的行和列。</p>
+
+<pre><code>class Solution(object):
+def setZeroes(self, matrix):
+    """
+    :type matrix: List[List[int]]
+    :rtype: void Do not return anything, modify matrix in-place instead.
+    """
+    row=set([])
+    col=set([])
+    i,j=0,0
+    n,m=len(matrix), len(matrix[0])
+    for i in range(n):
+        for j in range(m):
+            if matrix[i][j]==0:
+                row.add(i)
+                col.add(j)
+
+    for i in range(n):
+        if i in row:
+            for j in range(m):
+                matrix[i][j]=0
+    for j in range(m):
+        if j in col:
+            for i in range(n):
+                matrix[i][j]=0
+</code></pre>
+
+<h3>第七题 Remove Duplicates from Sorted Array</h3>
+
+<p>Follow up for "Remove Duplicates":
+What if duplicates are allowed at most twice?</p>
+
+<p>For example,
+Given sorted array nums = [1,1,1,2,2,3],</p>
+
+<p>Your function should return length = 5, with the first five elements of nums being 1, 1, 2, 2 and 3. It doesn't matter what you leave beyond the new length.</p>
+
+<h3>解法</h3>
+
+<p>使用 count做标记，分类处理。</p>
+
+<pre><code>class Solution(object):
+
+def removeDuplicates(self, nums):
+
+    """
+
+    :type nums: List[int]
+
+    :rtype: int
+
+    """
+
+    if len(nums) == 0 or len(nums) == 1:
+
+        return len(nums)
+
+
+
+    i, j = 0, 1
+
+    count = 0
+
+    while j &lt; len(nums):
+
+        if nums[i] == nums[j] and count == 0:
+
+            nums[i+1] = nums[j]
+
+            i += 1
+
+            j += 1
+
+            count = 1
+
+        elif nums[i] == nums[j] and count == 1:
+
+            j += 1
+
+        else:
+
+            nums[i+1] = nums[j]
+
+            i += 1
+
+            j += 1
+
+            count = 0
+
+    return i + 1
+</code></pre>
+
+<h3>第八题 Sort Colors</h3>
+
+<p>Given an array with n objects colored red, white or blue, sort them so that objects of the same color are adjacent, with the colors in the order red, white and blue.</p>
+
+<p>Here, we will use the integers 0, 1, and 2 to represent the color red, white, and blue respectively.</p>
+
+<p>Note:
+You are not suppose to use the library's sort function for this problem.</p>
+
+<p>click to show follow up.</p>
+
+<p>Follow up:
+A rather straight forward solution is a two-pass algorithm using counting sort.
+First, iterate the array counting number of 0's, 1's, and 2's, then overwrite array with total number of 0's, then 1's and followed by 2's.</p>
+
+<p>Could you come up with an one-pass algorithm using only constant space?</p>
+
+<h3>解法</h3>
+
+<p>用l,r来标记0和2的位置。</p>
+
+<pre><code>class Solution(object):
+
+def sortColors(self, nums):
+
+    """
+
+    :type nums: List[int]
+
+    :rtype: void Do not return anything, modify nums in-place instead.
+
+    """
+
+
+
+    n = len(nums)
+
+    l, r, i = 0, n - 1, 0
+
+    while l &lt; r and i &lt;= r:
+
+        while nums[i] == 2 and i &lt;= r:
+
+            nums[r], nums[i] = nums[i], nums[r]
+
+            r -= 1
+
+        while nums[i] == 0 and i &gt;= l:
+
+            nums[l], nums[i] = nums[i], nums[l]
+
+            l += 1
+
+        i += 1
+</code></pre>
+</body>
+</html>
