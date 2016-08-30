@@ -1031,5 +1031,819 @@ finally:
 <p>Python的os模块封装了操作系统的目录和文件操作，要注意这些函数有的在os模块中，有的在os.path模块中。</p>
 
 <p>在Thread和Process中，应当优选Process，因为Process更稳定，而且，Process可以分布到多台机器上，而Thread最多只能分布到同一台机器的多个CPU上。</p>
+
+<h1>Python Cli 编程</h1>
+
+<h2>什么是Cli</h2>
+
+<h2>Click工具</h2>
+
+<p>一个函数使用click.command()来装饰成一个callable的脚本。</p>
+
+<pre><code>import click
+
+@click.command()
+def hello():
+    click.echo('Hello World!')
+</code></pre>
+
+<p>装饰器将这个函数变为一个Command，然后可以执行。</p>
+
+<pre><code>if __name__ == '__main__':
+    hello()
+</code></pre>
+
+<p>使用 $ python hello.py</p>
+
+<p>得到  Hello World！</p>
+
+<p>同时还有help页面生成：</p>
+
+<pre><code>$ python hello.py --help
+Usage: hello.py [OPTIONS]
+
+Options:
+    --help  Show this message and exit.
+</code></pre>
+
+<h3>Virtual Environment 工具</h3>
+
+<p>Virtual Env为不同Python环境提供了不同依赖关系。</p>
+
+<p>建立新虚拟环境：</p>
+
+<p>$ virtualenv venv</p>
+
+<p>启动虚拟环境<br/>
+$ . venv/bin/activate</p>
+
+<p>关闭虚拟环境    <br/>
+$ deactivate</p>
+
+<h3>Setuptools</h3>
+
+<p>编写yourscript.py</p>
+
+<pre><code>import click
+
+@click.command()
+def cli():
+    """Example script."""
+    click.echo('Hello World!')
+</code></pre>
+
+<p>再编写对应的setup.py</p>
+
+<pre><code>from setuptools import setup
+
+setup(
+    name='yourscript',
+    version='0.1',
+    py_modules=['yourscript'],
+    install_requires=[
+        'Click',
+    ],
+    entry_points='''
+        [console_scripts]
+        yourscript=yourscript:cli
+    ''',
+)
+</code></pre>
+
+<p>用$ python setup.py install/develop 完成安装/测试，之后可以使用该命令行。</p>
+
+<p>如果有更复杂的命令行结构，则需要修改entry_points的路径。</p>
+
+<h3>Nesting command</h3>
+
+<p>Command 可以attach在Group类型的其他Command上。这样使得nesting变得可能。下面是一个实现处理数据库的两个command。</p>
+
+<pre><code>@click.group()
+def cli():
+pass
+
+@click.command()
+def initdb():
+    click.echo('Initialized the database')
+
+@click.command()
+def dropdb():
+    click.echo('Dropped the database')
+
+cli.add_command(initdb)
+cli.add_command(dropdb)
+</code></pre>
+
+<p>可以简写作：</p>
+
+<pre><code>@click.group()
+def cli():
+    pass
+
+@cli.command()
+def initdb():
+    click.echo('Initialized the database')
+
+@cli.command()
+def dropdb():
+    click.echo('Dropped the database')
+</code></pre>
+
+<h3>Parameters</h3>
+
+<p>使用option()和argument()来添加参数。</p>
+
+<pre><code>@click.command()
+@click.option('--count', default=1, help='number of greetings')
+@click.argument('name')
+def hello(count, name):
+    for x in range(count):
+        click.echo('Hello %s!' % name)
+</code></pre>
+
+<p>--count=num，让num给count赋值；name让promtp来提示输入。</p>
+
+<h4>option和argument 的区别</h4>
+
+<p>最好只在subcommands和input filenames或者URL的地方使用arguments，其他地方使用option。</p>
+
+<p>option的不同点在于：
+- option可以有对缺失输入的自动提示
+- 可以用作flag
+- option可以从环境变量中获取，argument不可以
+- option在帮助页面中有详细说明，argument没有</p>
+
+<p>argument的不同点在于：</p>
+
+<p>它可以接收任意多的参数，而option一般只能接收固定值的参数，通常为1.</p>
+
+<h4>parameter types</h4>
+
+<p>添加option() 装饰器就可以为command添加option.</p>
+
+<p>基本Option：</p>
+
+<p>The most basic option is a value option. These options accept one argument which is a value. If no type is provided, the type of the default value is used. If no default value is provided, the type is assumed to be STRING. By default, the name of the parameter is the first long option defined; otherwise the first short one is used.</p>
+
+<pre><code>@click.command()
+@click.option('--n', default=1)
+def dots(n):
+    click.echo('.' * n)
+</code></pre>
+
+<p>And on the command line:</p>
+
+<pre><code>$ dots --n=2
+</code></pre>
+
+<p>..</p>
+
+<p>In this case the option is of type INT because the default value is an integer.</p>
+
+<p>多值Option:</p>
+
+<p>Sometimes, you have options that take more than one argument. For options, only a fixed number of arguments is supported. This can be configured by the nargs parameter. The values are then stored as a tuple.</p>
+
+<pre><code>@click.command()
+@click.option('--pos', nargs=2, type=float)
+def findme(pos):
+    click.echo('%s / %s' % pos)
+And on the command line:
+
+$ findme --pos 2.0 3.0
+2.0 / 3.0
+</code></pre>
+
+<p>Tuple:</p>
+
+<p>Tuple可以逐一为输入指定类型。</p>
+
+<p>you can directly specify a tuple as type:</p>
+
+<pre><code>@click.command()
+@click.option('--item', type=(unicode, int))
+def putitem(item):
+    click.echo('name=%s id=%d' % item)
+</code></pre>
+
+<p>And on the command line:</p>
+
+<pre><code>$ putitem --item peter 1338
+name=peter id=1338
+</code></pre>
+
+<p>By using a tuple literal as type, nargs gets automatically set to the length of the tuple and the click.Tuple type is automatically used. The above example is thus equivalent to this:</p>
+
+<pre><code>@click.command()
+@click.option('--item', nargs=2, type=click.Tuple([unicode, int]))
+def putitem(item):
+    click.echo('name=%s id=%d' % item)
+</code></pre>
+
+<p>Multiple Options：</p>
+
+<p>使用 -m 来标识多个option。</p>
+
+<pre><code>@click.command()
+@click.option('--message', '-m', multiple=True)
+def commit(message):
+    click.echo('\n'.join(message))
+</code></pre>
+
+<p>And on the command line:</p>
+
+<pre><code>$ commit -m foo -m bar
+foo
+bar
+</code></pre>
+
+<p>Counting:</p>
+
+<pre><code>@click.command()
+@click.option('-v', '--verbose', count=True)
+def log(verbose):
+    click.echo('Verbosity: %s' % verbose)
+</code></pre>
+
+<p>And on the command line:</p>
+
+<pre><code>$ log -vvv
+Verbosity: 3
+</code></pre>
+
+<p>Boolean Flags:</p>
+
+<p>使用/来表示Flag的两个选择。</p>
+
+<p>Example:</p>
+
+<pre><code>import sys
+
+@click.command()
+@click.option('--shout/--no-shout', default=False)
+def info(shout):
+    rv = sys.platform
+    if shout:
+        rv = rv.upper() + '!!!!111'
+    click.echo(rv)
+</code></pre>
+
+<p>And on the command line:</p>
+
+<pre><code>$ info --shout
+LINUX2!!!!111
+$ info --no-shout
+linux2
+</code></pre>
+
+<p>或者用is_flag来表示。</p>
+
+<pre><code>import sys
+
+@click.command()
+@click.option('--shout', is_flag=True)
+def info(shout):
+    rv = sys.platform
+    if shout:
+        rv = rv.upper() + '!!!!111'
+    click.echo(rv)
+</code></pre>
+
+<p>And on the command line:</p>
+
+<pre><code>$ info --shout
+LINUX2!!!!111
+</code></pre>
+
+<p>Feature Switches：</p>
+
+<p>In addition to boolean flags, there are also feature switches. These are implemented by setting multiple options to the same parameter name and defining a flag value. Note that by providing the flag_value parameter, Click will implicitly set is_flag=True.</p>
+
+<pre><code>import sys
+
+@click.command()
+@click.option('--upper', 'transformation', flag_value='upper',
+          default=True)
+@click.option('--lower', 'transformation', flag_value='lower')
+def info(transformation):
+    click.echo(getattr(sys.platform, transformation)())
+</code></pre>
+
+<p>And on the command line:</p>
+
+<pre><code>$ info --upper
+LINUX2
+$ info --lower
+linux2
+$ info
+LINUX2
+</code></pre>
+
+<p>Choice Options:</p>
+
+<p>Sometimes, you want to have a parameter be a choice of a list of values. In that case you can use Choice type. It can be instantiated with a list of valid values.</p>
+
+<p>Example:</p>
+
+<pre><code>@click.command()
+@click.option('--hash-type', type=click.Choice(['md5', 'sha1']))
+def digest(hash_type):
+    click.echo(hash_type)
+</code></pre>
+
+<p>What it looks like:</p>
+
+<pre><code>$ digest --hash-type=md5
+md5
+
+$ digest --hash-type=foo
+Usage: digest [OPTIONS]
+
+Error: Invalid value for "--hash-type": invalid choice: foo. (choose from md5, sha1)
+
+$ digest --help
+Usage: digest [OPTIONS]
+
+Options:
+--hash-type [md5|sha1]
+--help                  Show this message and exit.
+</code></pre>
+
+<p>Prompting:</p>
+
+<p>Example:</p>
+
+<pre><code>@click.command()
+@click.option('--name', prompt=True)
+def hello(name):
+    click.echo('Hello %s!' % name)
+</code></pre>
+
+<p>And what it looks like:</p>
+
+<pre><code>$ hello --name=John
+Hello John!
+$ hello
+Name: John
+Hello John!
+</code></pre>
+
+<p>If you are not happy with the default prompt string, you can ask for a different one:</p>
+
+<pre><code>@click.command()
+@click.option('--name', prompt='Your name please')
+def hello(name):
+    click.echo('Hello %s!' % name)
+</code></pre>
+
+<p>What it looks like:</p>
+
+<pre><code>$ hello
+Your name please: John
+Hello John!
+</code></pre>
+
+<p>Password Prompts：</p>
+
+<p>Click also supports hidden prompts and asking for confirmation. This is useful for password input:</p>
+
+<pre><code>@click.command()
+@click.option('--password', prompt=True, hide_input=True,
+          confirmation_prompt=True)
+def encrypt(password):
+    click.echo('Encrypting password to %s' % password.encode('rot13'))
+</code></pre>
+
+<p>What it looks like:</p>
+
+<pre><code>$ encrypt
+Password: 
+Repeat for confirmation: 
+Encrypting password to frperg
+</code></pre>
+
+<p>Because this combination of parameters is quite common, this can also be replaced with the password_option() decorator:</p>
+
+<pre><code>@click.command()
+@click.password_option()
+def encrypt(password):
+    click.echo('Encrypting password to %s' % password.encode('rot13'))
+</code></pre>
+
+<p>Dynamic Defaults for Prompts：</p>
+
+<p>If you want to let the user configure the default value, but still be prompted if the option isn’t specified on the command line, you can do so by supplying a callable as the default value. For example, to get a default from the environment:</p>
+
+<pre><code>@click.command()
+@click.option('--username', prompt=True,
+          default=lambda: os.environ.get('USER', ''))
+def hello(username):
+    print("Hello,", username)
+</code></pre>
+
+<p>Yes Parameters：</p>
+
+<p>For dangerous operations, it’s very useful to be able to ask a user for confirmation. This can be done by adding a boolean --yes flag and asking for confirmation if the user did not provide it and to fail in a callback:</p>
+
+<pre><code>def abort_if_false(ctx, param, value):
+    if not value:
+        ctx.abort()
+
+@click.command()
+@click.option('--yes', is_flag=True, callback=abort_if_false,
+          expose_value=False,
+          prompt='Are you sure you want to drop the db?')
+def dropdb():
+    click.echo('Dropped all tables!')
+</code></pre>
+
+<p>And what it looks like on the command line:</p>
+
+<pre><code>$ dropdb
+Are you sure you want to drop the db? [y/N]: n
+Aborted!
+$ dropdb --yes
+Dropped all tables!
+</code></pre>
+
+<p>Because this combination of parameters is quite common, this can also be replaced with the confirmation_option() decorator:</p>
+
+<pre><code>@click.command()
+@click.confirmation_option(prompt='Are you sure you want to drop the db?')
+def dropdb():
+    click.echo('Dropped all tables!')
+</code></pre>
+
+<h3>Arguments</h3>
+
+<h4>Basic Arguments</h4>
+
+<p>The most basic option is a simple string argument of one value. If no type is provided, the type of the default value is used, and if no default value is provided, the type is assumed to be STRING.</p>
+
+<p>Example:</p>
+
+<pre><code>@click.command()
+@click.argument('filename')
+def touch(filename):
+    click.echo(filename)
+</code></pre>
+
+<p>And what it looks like:</p>
+
+<pre><code>$ touch foo.txt
+foo.txt
+</code></pre>
+
+<h4>Variadic Arguments</h4>
+
+<p>The second most common version is variadic arguments where a specific (or unlimited) number of arguments is accepted. This can be controlled with the nargs parameter. If it is set to -1, then an unlimited number of arguments is accepted.</p>
+
+<p>The value is then passed as a tuple. Note that only one argument can be set to nargs=-1, as it will eat up all arguments.</p>
+
+<p>Example:</p>
+
+<pre><code>@click.command()
+@click.argument('src', nargs=-1)
+@click.argument('dst', nargs=1)
+def copy(src, dst):
+    for fn in src:
+        click.echo('move %s to folder %s' % (fn, dst))
+</code></pre>
+
+<p>And what it looks like:</p>
+
+<pre><code>$ copy foo.txt bar.txt my_folder
+move foo.txt to folder my_folder
+move bar.txt to folder my_folder
+</code></pre>
+
+<h4>File Arguments</h4>
+
+<p>Click supports this through the click.File type which intelligently handles files for you. It also deals with Unicode and bytes correctly for all versions of Python so your script stays very portable.</p>
+
+<p>Example:</p>
+
+<pre><code>@click.command()
+@click.argument('input', type=click.File('rb'))
+@click.argument('output', type=click.File('wb'))
+def inout(input, output):
+    while True:
+        chunk = input.read(1024)
+        if not chunk:
+            break
+        output.write(chunk)
+</code></pre>
+
+<p>And what it does:</p>
+
+<pre><code>$ inout - hello.txt
+hello
+^D
+$ inout hello.txt -
+hello
+</code></pre>
+
+<h4>Environment Variables</h4>
+
+<p>Like options, arguments can also grab values from an environment variable. Unlike options, however, this is only supported for explicitly named environment variables.</p>
+
+<p>Example usage:</p>
+
+<pre><code>@click.command()
+@click.argument('src', envvar='SRC', type=click.File('r'))
+def echo(src):
+    click.echo(src.read())
+</code></pre>
+
+<p>And from the command line:
+export的作用注意一下
+    $ export SRC=hello.txt
+    $ echo
+    Hello World!</p>
+
+<p>In that case, it can also be a list of different environment variables where the first one is picked.</p>
+
+<p>Generally, this feature is not recommended because it can cause the user a lot of confusion.</p>
+
+<h3>User Input Prompts</h3>
+
+<h4>Input Prompts</h4>
+
+<p>手动地询问用户输入，使用prompt()，默认情况下，收入一个string，也可以指定输入的值类型。</p>
+
+<pre><code>value = click.prompt('Please enter a valid integer', type=int)
+</code></pre>
+
+<p>设置默认值。</p>
+
+<pre><code>value = click.prompt('Please enter a number', default=42.0)
+</code></pre>
+
+<h4>Confirmation Prompts</h4>
+
+<p>使用confirm()来与用户确认是否执行。</p>
+
+<pre><code>if click.confirm('Do you want to continue?'):
+click.echo('Well done!')
+</code></pre>
+
+<p>设置默认值。</p>
+
+<pre><code>click.confirm('Do you want to continue?', abort=True)
+</code></pre>
+
+<h3>Documenting Scripts</h3>
+
+<h4>Help Text</h4>
+
+<p>Simple example:</p>
+
+<pre><code>@click.command()
+@click.option('--count', default=1, help='number of greetings')
+@click.argument('name')
+def hello(count, name):
+    """This script prints hello NAME COUNT times."""
+    for x in range(count):
+        click.echo('Hello %s!' % name)
+</code></pre>
+
+<p>And what it looks like:</p>
+
+<pre><code>$ hello --help
+Usage: hello [OPTIONS] NAME
+
+This script prints hello NAME COUNT times.
+
+Options:
+--count INTEGER  number of greetings
+--help           Show this message and exit.
+</code></pre>
+
+<h3>Utilities</h3>
+
+<h4>打印到Stdout</h4>
+
+<p>使用click.echo()，句尾自动添加一个换行。</p>
+
+<pre><code>click.echo(b'\xe2\x98\x83', nl=False)
+click.echo('Hello World!', err=True)
+</code></pre>
+
+<h4>ANSI 颜色</h4>
+
+<p>使用Colorama来添加颜色。</p>
+
+<p>For styling a string, the style() function can be used:</p>
+
+<pre><code>import click
+
+click.echo(click.style('Hello World!', fg='green'))
+click.echo(click.style('Some more text', bg='blue', fg='white'))
+click.echo(click.style('ATTENTION', blink=True, bold=True))
+</code></pre>
+
+<p>The combination of echo() and style() is also available in a single function called secho():</p>
+
+<pre><code>click.secho('Hello World!', fg='green')
+click.secho('Some more text', bg='blue', fg='white')
+click.secho('ATTENTION', blink=True, bold=True)
+</code></pre>
+
+<h4>Pager Support</h4>
+
+<p>使用pager来给大段文字分页。</p>
+
+<pre><code>@click.command()
+def less():
+    click.echo_via_pager('\n'.join('Line %d' % idx
+                               for idx in range(200)))
+</code></pre>
+
+<h4>Screen Clearing</h4>
+
+<pre><code>import click
+click.clear()
+</code></pre>
+
+<h4>Getting Characters from Terminal</h4>
+
+<pre><code>import click
+
+click.echo('Continue? [yn] ', nl=False)
+c = click.getchar()
+click.echo()
+if c == 'y':
+    click.echo('We will go on')
+elif c == 'n':
+    click.echo('Abort!')
+else:
+    click.echo('Invalid input :(')
+</code></pre>
+
+<h4>Waiting for Key Press</h4>
+
+<pre><code>import click
+click.pause()
+</code></pre>
+
+<h4>Showing Progress Bars</h4>
+
+<p>The basic usage is very simple: the idea is that you have an iterable that you want to operate on. For each item in the iterable it might take some time to do processing. So say you have a loop like this:</p>
+
+<p>for user in all_the_users_to_process:</p>
+
+<pre><code>modify_the_user(user)
+</code></pre>
+
+<p>To hook this up with an automatically updating progress bar, all you need to do is to change the code to this:</p>
+
+<pre><code>import click
+
+with click.progressbar(all_the_users_to_process) as bar:
+    for user in bar:
+        modify_the_user(user)
+</code></pre>
+
+<p>Click will then automatically print a progress bar to the terminal and calculate the remaining time for you. The calculation of remaining time requires that the iterable has a length. If it does not have a length but you know the length, you can explicitly provide it:</p>
+
+<pre><code>with click.progressbar(all_the_users_to_process,
+                   length=number_of_users) as bar:
+    for user in bar:
+        modify_the_user(user)
+</code></pre>
+
+<p>Another useful feature is to associate a label with the progress bar which will be shown preceding the progress bar:</p>
+
+<pre><code>with click.progressbar(all_the_users_to_process,
+                   label='Modifying user accounts',
+                   length=number_of_users) as bar:
+    for user in bar:
+        modify_the_user(user)
+</code></pre>
+
+<p>Sometimes, one may need to iterate over an external iterator, and advance the progress bar irregularly. To do so, you need to specify the length (and no iterable), and use the update method on the context return value instead of iterating directly over it:</p>
+
+<pre><code>with click.progressbar(length=total_size,
+                   label='Unzipping archive') as bar:
+    for archive in zip_file:
+        archive.extract()
+        bar.update(archive.size)
+</code></pre>
+
+<h3>Python 装饰器</h3>
+
+<h4>基本语法</h4>
+
+<p>语法糖:</p>
+
+<pre><code>@bar
+def foo():
+    print "foo"
+</code></pre>
+
+<p>其等价于</p>
+
+<pre><code>def foo():
+    print "foo"
+foo = bar(foo)
+</code></pre>
+
+<p>无参数装饰器：</p>
+
+<pre><code>def foo(func):
+    print 'decorate foo'
+    return func
+
+@foo
+def bar():
+    print 'bar'
+
+bar()       
+</code></pre>
+
+<p>foo 函数被用作装饰器，其本身接收一个函数对象作为参数，然后做一些工作后，返回接收的参数，供外界调用。
+注意: 时刻牢记 @foo 只是一个语法糖，其本质是 foo = bar(foo)</p>
+
+<p>带参数装饰器：</p>
+
+<pre><code>import time  
+
+def function_performance_statistics(trace_this=True):  
+    if trace_this:  
+       def performace_statistics_delegate(func):  
+            def counter(*args, **kwargs):  
+                start = time.clock()  
+                func(*args, **kwargs)  
+                end =time.clock()  
+                print 'used time: %d' % (end - start, )  
+            return counter  
+    else:  
+       def performace_statistics_delegate(func):  
+            return func  
+    return performace_statistics_delegate  
+
+@function_performance_statistics(True)  
+def add(x, y):  
+    time.sleep(3)  
+    print 'add result: %d' % (x + y,)  
+
+@function_performance_statistics(False)  
+def mul(x, y=1):  
+    print 'mul result: %d' % (x * y,)  
+
+add(1, 1)  
+mul(10) 
+</code></pre>
+
+<p>上述代码中装饰器的调用等价于</p>
+
+<pre><code>add = function_performance_statistics(True)(add(1, 1))  
+mul = function_performance_statistics(False)(mul(10))  
+</code></pre>
+
+<p>类的装饰器：</p>
+
+<pre><code>def bar(dummy):  
+    print 'bar'  
+
+def inject(cls):  # cls是被修改的类
+    cls.bar = bar  
+    return cls  
+
+@inject  
+class Foo(object):  
+    pass  
+
+foo = Foo()  
+foo.bar() 
+</code></pre>
+
+<p>上述代码的 inject 装饰器为类动态的添加一个 bar 方法，因为类在调用非静态方法的时候会传进一个self 指针，因此 bar 的第一个参数我们简单的忽略即可。</p>
+
+<p>类装饰器：</p>
+
+<p>类装饰器相比函数装饰器，具有灵活度大，高内聚、封装性等优点。其实现起来主要是靠类内部的 <strong>call</strong> 方法，当使用 @ 形式将装饰器附加到函数上时，就会调用此方法。</p>
+
+<pre><code>class Foo(object):  
+    def __init__(self, func):  
+        super(Foo, self).__init__()  
+        self._func = func  
+
+    def __call__(self):  
+        print 'class decorator'  
+        self._func()  
+
+@Foo  
+def bar():  
+    print 'bar'  
+
+bar() 
+</code></pre>
+
+<p>相当于给bar函数添加了类的属性。</p>
+
+<h4>调用时机</h4>
+
+<p>在相同 .py 文件中，装饰器对所装饰的函数只进行一次装饰，不会每次调用相应函数时都重新装饰</p>
 </body>
 </html>
