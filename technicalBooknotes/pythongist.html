@@ -1,0 +1,1849 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<style>
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote {
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", Arial, sans-serif;
+    font-size: 13px;
+    line-height: 18px;
+    color: #737373;
+    background-color: white;
+    margin: 10px 13px 10px 13px;
+}
+table {
+	margin: 10px 0 15px 0;
+	border-collapse: collapse;
+}
+td,th {	
+	border: 1px solid #ddd;
+	padding: 3px 10px;
+}
+th {
+	padding: 5px 10px;	
+}
+
+a {
+    color: #0069d6;
+}
+a:hover {
+    color: #0050a3;
+    text-decoration: none;
+}
+a img {
+    border: none;
+}
+p {
+    margin-bottom: 9px;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #404040;
+    line-height: 36px;
+}
+h1 {
+    margin-bottom: 18px;
+    font-size: 30px;
+}
+h2 {
+    font-size: 24px;
+}
+h3 {
+    font-size: 18px;
+}
+h4 {
+    font-size: 16px;
+}
+h5 {
+    font-size: 14px;
+}
+h6 {
+    font-size: 13px;
+}
+hr {
+    margin: 0 0 19px;
+    border: 0;
+    border-bottom: 1px solid #ccc;
+}
+blockquote {
+    padding: 13px 13px 21px 15px;
+    margin-bottom: 18px;
+    font-family:georgia,serif;
+    font-style: italic;
+}
+blockquote:before {
+    content:"\201C";
+    font-size:40px;
+    margin-left:-10px;
+    font-family:georgia,serif;
+    color:#eee;
+}
+blockquote p {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 18px;
+    margin-bottom: 0;
+    font-style: italic;
+}
+code, pre {
+    font-family: Monaco, Andale Mono, Courier New, monospace;
+}
+code {
+    background-color: #fee9cc;
+    color: rgba(0, 0, 0, 0.75);
+    padding: 1px 3px;
+    font-size: 12px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+pre {
+    display: block;
+    padding: 14px;
+    margin: 0 0 18px;
+    line-height: 16px;
+    font-size: 11px;
+    border: 1px solid #d9d9d9;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+pre code {
+    background-color: #fff;
+    color:#737373;
+    font-size: 11px;
+    padding: 0;
+}
+sup {
+    font-size: 0.83em;
+    vertical-align: super;
+    line-height: 0;
+}
+* {
+	-webkit-print-color-adjust: exact;
+}
+@media screen and (min-width: 914px) {
+    body {
+        width: 854px;
+        margin:10px auto;
+    }
+}
+@media print {
+	body,code,pre code,h1,h2,h3,h4,h5,h6 {
+		color: black;
+	}
+	table, pre {
+		page-break-inside: avoid;
+	}
+}
+</style>
+<title>Python 使用简要</title>
+
+</head>
+<body>
+<h1>Python 使用简要</h1>
+
+<p><a href="../index.html">返回首页</a></p>
+
+<p><a href="./technicalBooknotesIndex.html">返回技术书籍笔记</a></p>
+
+
+<p>保证编辑器和python文件都用UTF-8编码可以保证非英语文字的输出。
+将# -<em>- coding: utf-8 -</em>- 放在文件头</p>
+
+<p>输出格式控制：</p>
+
+<p><code>&gt;&gt;&gt;'Hello, %s' % 'world'</code></p>
+
+<p><code>&gt;&gt;&gt; '%2d-%02d' % (3, 1)</code></p>
+
+<p><code>3-01</code></p>
+
+<p><code>&gt;&gt;&gt; '%.2f' % 3.1415926</code></p>
+
+<p><code>3.14</code></p>
+
+<p>使用中括号建立list</p>
+
+<p><code>classmates = ['Michael', 'Bob', 'Tracy']</code></p>
+
+<p>使用小括号建立tuple</p>
+
+<p><code>&gt;&gt;&gt; classmates = ('Michael', 'Bob', 'Tracy')</code></p>
+
+<p>tuple不可变而List可变</p>
+
+<p>if判断条件还可以简写，比如写：</p>
+
+<pre><code>if x:
+
+    print('True')
+</code></pre>
+
+<p>只要x是非零数值、非空字符串、非空list等，就判断为True，否则为False。</p>
+
+<p>要保证hash的正确性，作为key的对象就不能变。在Python中，字符串、整数等都是不可变的，因此，可以放心地作为key。而list是可变的，就不能作为key</p>
+
+<p>set可以看成数学意义上的无序和无重复元素的集合，因此，两个set可以做数学意义上的交集、并集等操作：</p>
+
+<p><code>&gt;&gt;&gt; s1 = set([1, 2, 3])</code></p>
+
+<p><code>&gt;&gt;&gt; s2 = set([2, 3, 4])</code></p>
+
+<p><code>&gt;&gt;&gt; s1 &amp; s2</code></p>
+
+<p><code>{2, 3}</code></p>
+
+<p><code>&gt;&gt;&gt; s1 | s2</code></p>
+
+<p><code>{1, 2, 3, 4}</code></p>
+
+<p>Python和Java一样，是对象和实例的组合映射，而C/C++是指针与内存的映射。</p>
+
+<p>Python的变量声明没有一开始就指定变量类型，所以函数的声明中也没有变量的类型。</p>
+
+<p>Python的变量类型其实是动态定义的，这和Python即时解释的特性相关，也导致了在编译时对错误的疏漏。</p>
+
+<p>如果你已经把my_abs()的函数定义保存为abstest.py文件了，那么，可以在该文件的当前目录下启动Python解释器，用from abstest import my_abs来导入my_abs()函数，注意abstest是文件名（不含.py扩展名）</p>
+
+<p>让我们修改一下my_abs的定义，对参数类型做检查，只允许整数和浮点数类型的参数。数据类型检查可以用内置函数isinstance()实现：</p>
+
+<pre><code>def my_abs(x):
+    if not isinstance(x, (int, float)):
+        raise TypeError('bad operand type')
+    if x &gt;= 0:
+        return x
+    else:
+        return -x
+</code></pre>
+
+<p>注意isinstance(x, (int, float)), not 和 raise的用法。</p>
+
+<pre><code>import math
+
+def move(x, y, step, angle=0):
+    nx = x + step * math.cos(angle)
+    ny = y - step * math.sin(angle)
+    return nx, ny
+</code></pre>
+
+<p>函数可以同时返回多个值，但其实就是一个tuple。</p>
+
+<p>定义默认参数要牢记一点：默认参数必须指向不变对象！</p>
+
+<pre><code>def add_end(L=None):
+    if L is None:
+        L = []
+    L.append('END')
+    return L
+</code></pre>
+
+<p>否则，add_end() 每次都会增加一个END</p>
+
+<p>可变参数的函数</p>
+
+<pre><code>def calc(numbers):
+    sum = 0
+    for n in numbers:
+        sum = sum + n * n
+    return sum
+</code></pre>
+
+<p>但是调用的时候，需要先组装出一个list或tuple：</p>
+
+<p><code>&gt;&gt;&gt; calc([1, 2, 3])</code></p>
+
+<p><code>14</code></p>
+
+<p><code>&gt;&gt;&gt; calc((1, 3, 5, 7))</code></p>
+
+<p><code>84</code></p>
+
+<p>所以，我们把函数的参数改为可变参数：</p>
+
+<pre><code>def calc(*numbers):
+    sum = 0
+    for n in numbers:
+        sum = sum + n * n
+    return sum
+</code></pre>
+
+<p>定义可变参数和定义一个list或tuple参数相比，仅仅在参数前面加了一个*号。在函数内部，参数numbers接收到的是一个tuple，因此，函数代码完全不变。但是，调用该函数时，可以传入任意个参数，包括0个参数：</p>
+
+<p><code>&gt;&gt;&gt; calc(1, 2)</code></p>
+
+<p><code>5</code></p>
+
+<p><code>&gt;&gt;&gt; calc()</code></p>
+
+<p><code>0</code></p>
+
+<p>如果已经有一个list或者tuple，要调用一个可变参数怎么办？可以这样做：</p>
+
+<p><code>&gt;&gt;&gt; nums = [1, 2, 3]</code></p>
+
+<p><code>&gt;&gt;&gt; calc(nums[0], nums[1], nums[2])</code></p>
+
+<p><code>14</code></p>
+
+<p>这种写法当然是可行的，问题是太繁琐，所以Python允许你在list或tuple前面加一个*号，把list或tuple的元素变成可变参数传进去：</p>
+
+<p><code>&gt;&gt;&gt; nums = [1, 2, 3]</code></p>
+
+<p><code>&gt;&gt;&gt; calc(*nums)</code></p>
+
+<p><code>14</code></p>
+
+<p>*nums表示把nums这个list的所有元素作为可变参数传进去。这种写法相当有用，而且很常见。</p>
+
+<p>可变参数允许你传入0个或任意个参数，这些可变参数在函数调用时自动组装为一个tuple。而关键字参数允许你传入0个或任意个含参数名的参数，这些关键字参数在函数内部自动组装为一个dict。请看示例：</p>
+
+<pre><code>def person(name, age, **kw):
+    print('name:', name, 'age:', age, 'other:', kw)
+</code></pre>
+
+<p><code>&gt;&gt;&gt; person('Bob', 35, city='Beijing')</code></p>
+
+<p><code>name: Bob age: 35 other: {'city': 'Beijing'}</code></p>
+
+<p><code>&gt;&gt;&gt; person('Adam', 45, gender='M', job='Engineer')</code></p>
+
+<p><code>name: Adam age: 45 other: {'gender': 'M', 'job': 'Engineer'}</code></p>
+
+<p>**extra表示把extra这个dict的所有key-value用关键字参数传入到函数的
+**kw参数，kw将获得一个dict，注意kw获得的dict是extra的一份拷贝，对kw的改动不会影响到函数外的extra。</p>
+
+<p>Python的函数具有非常灵活的参数形态，既可以实现简单的调用，又可以传入非常复杂的参数。</p>
+
+<p>默认参数一定要用不可变对象，如果是可变对象，程序运行时会有逻辑错误！</p>
+
+<p>要注意定义可变参数和关键字参数的语法：</p>
+
+<p>*args是可变参数，args接收的是一个tuple；</p>
+
+<p>**kw是关键字参数，kw接收的是一个dict。</p>
+
+<p>以及调用函数时如何传入可变参数和关键字参数的语法：</p>
+
+<p>可变参数既可以直接传入：func(1, 2, 3)，又可以先组装list或tuple，再通过*args传入：func(*(1, 2, 3))；</p>
+
+<p>关键字参数既可以直接传入：func(a=1, b=2)，又可以先组装dict，再通过**kw传入：func(**{'a': 1, 'b': 2})。</p>
+
+<p>使用*args和**kw是Python的习惯写法，当然也可以用其他参数名，但最好使用习惯用法。</p>
+
+<hr />
+
+<p>尾递归是指，在函数返回的时候，调用自身本身，并且，return语句不能包含表达式。这样，编译器或者解释器就可以把尾递归做优化，使递归本身无论调用多少次，都只占用一个栈帧，不会出现栈溢出的情况。</p>
+
+<p>上面的fact(n)函数由于return n * fact(n - 1)引入了乘法表达式，所以就不是尾递归了。要改成尾递归方式，需要多一点代码，主要是要把每一步的乘积传入到递归函数中：</p>
+
+<pre><code>def fact(n):
+    return fact_iter(n, 1)
+
+def fact_iter(num, product):
+    if num == 1:
+        return product
+    return fact_iter(num - 1, num * product)
+</code></pre>
+
+<p>可以看到，return fact_iter(num - 1, num * product)仅返回递归函数本身，num - 1和num * product在函数调用前就会被计算，不影响函数调用。</p>
+
+<hr />
+
+<p>要创建一个generator，有很多种方法。第一种方法很简单，只要把一个列表生成式的[]改成()，就创建了一个generator：</p>
+
+<p><code>&gt;&gt;&gt; L = [x * x for x in range(10)]</code></p>
+
+<p><code>&gt;&gt;&gt; L</code></p>
+
+<p><code>[0, 1, 4, 9, 16, 25, 36, 49, 64, 81]</code></p>
+
+<p><code>&gt;&gt;&gt; g = (x * x for x in range(10))</code></p>
+
+<p><code>&gt;&gt;&gt; g</code></p>
+
+<p><code>&lt;generator object &lt;genexpr&gt; at 0x1022ef630&gt;</code></p>
+
+<p>创建L和g的区别仅在于最外层的[]和()，L是一个list，而g是一个generator。</p>
+
+<p>我们可以直接打印出list的每一个元素，但我们怎么打印出generator的每一个元素呢？</p>
+
+<p>如果要一个一个打印出来，可以通过next()函数获得generator的下一个返回值：</p>
+
+<p><code>&gt;&gt;&gt; next(g)</code></p>
+
+<p><code>0</code></p>
+
+<p><code>&gt;&gt;&gt; next(g)</code></p>
+
+<p><code>1</code></p>
+
+<p><code>&gt;&gt;&gt; next(g)</code></p>
+
+<p><code>4</code></p>
+
+<pre><code>def fib(max):
+    n, a, b = 0, 0, 1
+    while n &lt; max:
+        yield b
+        a, b = b, a + b
+        n = n + 1
+    return 'done'
+</code></pre>
+
+<p>这就是定义generator的另一种方法。如果一个函数定义中包含yield关键字，那么这个函数就不再是一个普通函数，而是一个generator：</p>
+
+<p><code>&gt;&gt;&gt; f = fib(6)</code></p>
+
+<p><code>&gt;&gt;&gt; f</code></p>
+
+<p><code>&lt;generator object fib at 0x104feaaa0&gt;</code></p>
+
+<p>凡是可作用于for循环的对象都是Iterable类型；</p>
+
+<p>凡是可作用于next()函数的对象都是Iterator类型，它们表示一个惰性计算的序列；</p>
+
+<p>集合数据类型如list、dict、str等是Iterable但不是Iterator，不过可以通过iter()函数获得一个Iterator对象。</p>
+
+<p>Python的for循环本质上就是通过不断调用next()函数实现的，例如：</p>
+
+<pre><code>for x in [1, 2, 3, 4, 5]:
+    pass
+</code></pre>
+
+<p>实际上完全等价于：</p>
+
+<pre><code>\# 首先获得Iterator对象:
+`it = iter([1, 2, 3, 4, 5])`
+\# 循环:
+while True:
+    try:
+        # 获得下一个值:
+        x = next(it)
+    except StopIteration:
+        # 遇到StopIteration就退出循环
+        break
+</code></pre>
+
+<p>函数式编程的一个特点就是，允许把函数本身作为参数传入另一个函数，还允许返回一个函数！
+Python对函数式编程提供部分支持。由于Python允许使用变量，因此，Python不是纯函数式编程语言。</p>
+
+<p>如果一个变量指向了一个函数，那么，可否通过该变量来调用这个函数？用代码验证一下：</p>
+
+<p><code>&gt;&gt;&gt; f = abs</code></p>
+
+<p><code>&gt;&gt;&gt; f(-10)</code></p>
+
+<p><code>10</code></p>
+
+<p>成功！说明变量f现在已经指向了abs函数本身。直接调用abs()函数和调用变量f()完全相同。</p>
+
+<p>既然变量可以指向函数，函数的参数能接收变量，那么一个函数就可以接收另一个函数作为参数，这种函数就称之为高阶函数。</p>
+
+<p>一个最简单的高阶函数：</p>
+
+<pre><code>def add(x, y, f):
+    return f(x) + f(y)
+</code></pre>
+
+<p>map()传入的第一个参数是f，即函数对象本身。由于结果r是一个Iterator，Iterator是惰性序列，因此通过list()函数让它把整个序列都计算出来并返回一个list。</p>
+
+<p>再看reduce的用法。reduce把一个函数作用在一个序列[x1, x2, x3, ...]上，这个函数必须接收两个参数，reduce把结果继续和序列的下一个元素做累积计算，其效果就是：</p>
+
+<pre><code>reduce(f, [x1, x2, x3, x4]) = f(f(f(x1, x2), x3), x4)
+</code></pre>
+
+<p>Python内建的filter()函数用于过滤序列。</p>
+
+<p>和map()类似，filter()也接收一个函数和一个序列。和map()不同的是，filter()把传入的函数依次作用于每个元素，然后根据返回值是True还是False决定保留还是丢弃该元素。</p>
+
+<p>一个函数可以返回一个计算结果，也可以返回一个函数。
+返回一个函数时，牢记该函数并未执行，返回函数中不要引用任何可能会变化的变量。</p>
+
+<p>关键字lambda表示匿名函数，冒号前面的x表示函数参数。</p>
+
+<p>匿名函数有个限制，就是只能有一个表达式，不用写return，返回值就是该表达式的结果。</p>
+
+<p>用匿名函数有个好处，因为函数没有名字，不必担心函数名冲突。此外，匿名函数也是一个函数对象，也可以把匿名函数赋值给一个变量，再利用变量来调用该函数：</p>
+
+<p><code>&gt;&gt;&gt; f = lambda x: x * x</code></p>
+
+<p><code>&gt;&gt;&gt; f</code></p>
+
+<p><code>&lt;function &lt;lambda&gt; at 0x101c6ef28&gt;</code></p>
+
+<p><code>&gt;&gt;&gt; f(5)</code></p>
+
+<p><code>25</code></p>
+
+<p>functools.partial就是帮助我们创建一个偏函数的，不需要我们自己定义int2()，可以直接使用下面的代码创建一个新的函数int2：</p>
+
+<p><code>&gt;&gt;&gt; import functools</code></p>
+
+<p><code>&gt;&gt;&gt; int2 = functools.partial(int, base=2)</code></p>
+
+<p><code>&gt;&gt;&gt; int2('1000000')</code></p>
+
+<p><code>64</code></p>
+
+<p><code>&gt;&gt;&gt; int2('1010101')</code></p>
+
+<p><code>85</code></p>
+
+<p>所以，简单总结functools.partial的作用就是，把一个函数的某些参数给固定住（也就是设置默认值），返回一个新的函数，调用这个新函数会更简单。</p>
+
+<p>注意到上面的新的int2函数，仅仅是把base参数重新设定默认值为2，但也可以在函数调用时传入其他值：</p>
+
+<p><code>&gt;&gt;&gt; int2('1000000', base=10)</code></p>
+
+<p><code>1000000</code></p>
+
+<p>相当于：</p>
+
+<pre><code>kw = { 'base': 2 }
+int('10010', **kw)
+</code></pre>
+
+<p>当传入：</p>
+
+<pre><code>max2 = functools.partial(max, 10)
+</code></pre>
+
+<p>实际上会把10作为*args的一部分自动加到左边，也就是：</p>
+
+<p><code>max2(5, 6, 7)</code></p>
+
+<p>相当于：</p>
+
+<pre><code>args = (10, 5, 6, 7)
+max(*args)
+</code></pre>
+
+<p>结果为10。
+当指定参数名的时候，会固定参数的默认值；如果没有指定参数名，那么就是加在*args的最前面。</p>
+
+<p>当函数的参数个数太多，需要简化时，使用functools.partial可以创建一个新的函数，这个新函数可以固定住原函数的部分参数，从而在调用时更简单。</p>
+
+<p>模块：
+最大的好处是大大提高了代码的可维护性。其次，编写代码不必从零开始。当一个模块编写完毕，就可以被其他地方引用。我们在编写程序的时候，也经常引用其他模块，包括Python内置的模块和来自第三方的模块。</p>
+
+<p>使用模块还可以避免函数名和变量名冲突。相同名字的函数和变量完全可以分别存在不同的模块中，因此，我们自己在编写模块时，不必考虑名字会与其他模块冲突。但是也要注意，尽量不要与内置函数名字冲突。
+请注意，每一个包目录下面都会有一个__init__.py的文件，这个文件是必须存在的，否则，Python就把这个目录当成普通目录，而不是一个包。__init__.py可以是空文件，也可以有Python代码，因为__init__.py本身就是一个模块，而它的模块名就是mycompany。</p>
+
+<pre><code>if __name__=='__main__':
+    test()
+</code></pre>
+
+<p>当我们在命令行运行hello模块文件时，Python解释器把一个特殊变量__name__置为___main__，而如果在其他地方导入该hello模块时，if判断将失败，因此，这种if测试可以让一个模块通过命令行运行时执行一些额外的代码，最常见的就是运行测试。</p>
+
+<p>作用域</p>
+
+<p>在一个模块中，我们可能会定义很多函数和变量，但有的函数和变量我们希望给别人使用，有的函数和变量我们希望仅仅在模块内部使用。在Python中，是通过_前缀来实现的。</p>
+
+<p>正常的函数和变量名是公开的（public），可以被直接引用，比如：abc，x123，PI等；</p>
+
+<p>类似__xxx__这样的变量是特殊变量，可以被直接引用，但是有特殊用途，比如上面的___author__，__name__就是特殊变量，hello模块定义的文档注释也可以用特殊变量__doc__访问，我们自己的变量一般不要用这种变量名；</p>
+
+<p>类似_xxx和__xxx这样的函数或变量就是非公开的（private），不应该被直接引用，比如_abc，__abc等；</p>
+
+<p>之所以我们说，private函数和变量“不应该”被直接引用，而不是“不能”被直接引用，是因为Python并没有一种方法可以完全限制访问private函数或变量，但是，从编程习惯上不应该引用private函数或变量。</p>
+
+<p>在Python中，定义类是通过class关键字：</p>
+
+<pre><code>class Student(object):
+    pass
+</code></pre>
+
+<p>class后面紧接着是类名，即Student，类名通常是大写开头的单词，紧接着是(object)，表示该类是从哪个类继承下来的，继承的概念我们后面再讲，通常，如果没有合适的继承类，就使用object类，这是所有类最终都会继承的类。</p>
+
+<p>定义好了Student类，就可以根据Student类创建出Student的实例，创建实例是通过类名+()实现的</p>
+
+<p>如果要让内部属性不被外部访问，可以把属性的名称前加上两个下划线__，在Python中，实例的变量名如果以\__开头，就变成了一个私有变量（private），只有内部可以访问，外部不能访问，所以，我们把Student类改一改：</p>
+
+<pre><code>class Student(object):
+
+def __init__(self, name, score):
+    self.__name = name
+    self.__score = score
+
+def print_score(self):
+    print('%s: %s' % (self.__name, self.__score))
+</code></pre>
+
+<p>需要注意的是，在Python中，变量名类似__xxx__的，也就是以双下划线开头，并且以双下划线结尾的，是特殊变量，特殊变量是可以直接访问的，不是private变量，所以，不能用__name__、___score__这样的变量名。</p>
+
+<p>有些时候，你会看到以一个下划线开头的实例变量名，比如_name，这样的实例变量外部是可以访问的，但是，按照约定俗成的规定，当你看到这样的变量时，意思就是，“虽然我可以被访问，但是，请把我视为私有变量，不要随意访问”。</p>
+
+<h2>静态语言 vs 动态语言</h2>
+
+<p>对于静态语言（例如Java）来说，如果需要传入Animal类型，则传入的对象必须是Animal类型或者它的子类，否则，将无法调用run()方法。</p>
+
+<p>对于Python这样的动态语言来说，则不一定需要传入Animal类型。我们只需要保证传入的对象有一个run()方法就可以了：</p>
+
+<pre><code>class Timer(object):
+    def run(self):
+        print('Start...')
+</code></pre>
+
+<p>这就是动态语言的“鸭子类型”，它并不要求严格的继承体系，一个对象只要“看起来像鸭子，走起路来像鸭子”，那它就可以被看做是鸭子。</p>
+
+<p>Python的“file-like object“就是一种鸭子类型。对真正的文件对象，它有一个read()方法，返回其内容。但是，许多对象，只要有read()方法，都被视为“file-like object“。许多函数接收的参数就是“file-like object“，你不一定要传入真正的文件对象，完全可以传入任何实现了read()方法的对象。</p>
+
+<p>注意使用type() 和 isinstance()函数</p>
+
+<p>如果要获得一个对象的所有属性和方法，可以使用dir()函数，它返回一个包含字符串的list，比如，获得一个str对象的所有属性和方法：</p>
+
+<p><code>&gt;&gt;&gt; dir('ABC')</code></p>
+
+<p><code>['__add__', '__class__', '__contains__', '__delattr__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getitem__', '__getnewargs__', '__gt__', '__hash__', '__init__', '__iter__', '__le__', '__len__', '__lt__', '__mod__', '__mul__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__rmod__', '__rmul__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', 'capitalize', 'casefold', 'center', 'count', 'encode', 'endswith', 'expandtabs', 'find', 'format', 'format_map', 'index', 'isalnum', 'isalpha', 'isdecimal', 'isdigit', 'isidentifier', 'islower', 'isnumeric', 'isprintable', 'isspace', 'istitle', 'isupper', 'join', 'ljust', 'lower', 'lstrip', 'maketrans', 'partition', 'replace', 'rfind', 'rindex', 'rjust', 'rpartition', 'rsplit', 'rstrip', 'split', 'splitlines', 'startswith', 'strip', 'swapcase', 'title', 'translate', 'upper', 'zfill']</code></p>
+
+<p>类似__xxx__的属性和方法在Python中都是有特殊用途的，比如__len__方法返回长度。在Python中，如果你调用len()函数试图获取一个对象的长度，实际上，在len()函数内部，它自动去调用该对象的__len__()方法，所以，下面的代码是等价的：</p>
+
+<p><code>&gt;&gt;&gt; len('ABC')</code></p>
+
+<p><code>3</code></p>
+
+<p><code>&gt;&gt;&gt; 'ABC'.__len__()</code></p>
+
+<p><code>3</code></p>
+
+<p>如果我们想要限制实例的属性怎么办？比如，只允许对Student实例添加name和age属性。</p>
+
+<p>为了达到限制的目的，Python允许在定义class的时候，定义一个特殊的__slots__变量，来限制该class实例能添加的属性：</p>
+
+<pre><code>class Student(object):
+    __slots__ = ('name', 'age') # 用tuple定义允许绑定的属性名称
+</code></pre>
+
+<p>使用__slots__要注意，__slots__定义的属性仅对当前类实例起作用，对继承的子类是不起作用的
+除非在子类中也定义__slots__，这样，子类实例允许定义的属性就是自身的__slots__加上父类的__slots__。</p>
+
+<p>把一个getter方法变成属性，只需要加上@property就可以了，此时，@property本身又创建了另一个装饰器@score.setter，负责把一个setter方法变成属性赋值，于是，我们就拥有一个可控的属性操作：</p>
+
+<p><code>&gt;&gt;&gt; s = Student()</code></p>
+
+<p><code>&gt;&gt;&gt; s.score = 60 # OK，实际转化为s.set_score(60)</code></p>
+
+<p><code>&gt;&gt;&gt; s.score # OK，实际转化为s.get_score()</code></p>
+
+<p><code>60</code></p>
+
+<p><code>&gt;&gt;&gt; s.score = 9999</code></p>
+
+<p><code>Traceback (most recent call last):</code></p>
+
+<p>  <code>...</code></p>
+
+<p><code>ValueError: score must between 0 ~ 100!</code></p>
+
+<p>注意到这个神奇的@property，我们在对实例属性操作的时候，就知道该属性很可能不是直接暴露的，而是通过getter和setter方法来实现的。</p>
+
+<p>还可以定义只读属性，只定义getter方法，不定义setter方法就是一个只读属性：</p>
+
+<pre><code>class Student(object):
+
+    @property
+    def birth(self):
+        return self._birth
+
+    @birth.setter
+    def birth(self, value):
+        self._birth = value
+
+    @property
+    def age(self):
+        return 2015 - self._birth
+</code></pre>
+
+<p>上面的birth是可读写属性，而age就是一个只读属性，因为age可以根据birth和当前时间计算出来。</p>
+
+<p>我们要给动物再加上Runnable和Flyable的功能，只需要先定义好Runnable和Flyable的类：</p>
+
+<pre><code>class Runnable(object):
+    def run(self):
+        print('Running...')
+
+class Flyable(object):
+    def fly(self):
+        print('Flying...')
+</code></pre>
+
+<p>对于需要Runnable功能的动物，就多继承一个Runnable，例如Dog：</p>
+
+<pre><code>class Dog(Mammal, Runnable):
+    pass
+</code></pre>
+
+<p>对于需要Flyable功能的动物，就多继承一个Flyable，例如Bat：</p>
+
+<pre><code>class Bat(Mammal, Flyable):
+    pass
+</code></pre>
+
+<p>通过多重继承，一个子类就可以同时获得多个父类的所有功能。</p>
+
+<p>Python提供了Enum类来实现这个功能：</p>
+
+<pre><code>from enum import Enum
+
+Month = Enum('Month', ('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul',     'Aug', 'Sep', 'Oct', 'Nov', 'Dec'))
+</code></pre>
+
+<p>这样我们就获得了Month类型的枚举类，可以直接使用Month.Jan来引用一个常量，或者枚举它的所有成员：</p>
+
+<pre><code>for name, member in Month.__members__.items():
+    print(name, '=&gt;', member, ',', member.value)
+</code></pre>
+
+<p>value属性则是自动赋给成员的int常量，默认从1开始计数。</p>
+
+<p>如果需要更精确地控制枚举类型，可以从Enum派生出自定义类：</p>
+
+<pre><code>from enum import Enum, unique
+
+@unique
+class Weekday(Enum):
+    Sun = 0 # Sun的value被设定为0
+    Mon = 1
+    Tue = 2
+    Wed = 3
+    Thu = 4
+    Fri = 5
+    Sat = 6
+</code></pre>
+
+<p>@unique装饰器可以帮助我们检查保证没有重复值。既可以用成员名称引用枚举常量，又可以直接根据value的值获得枚举常量。</p>
+
+<p>动态语言和静态语言最大的不同，就是函数和类的定义，不是编译时定义的，而是运行时动态创建的。</p>
+
+<p>比方说我们要定义一个Hello的class，就写一个hello.py模块：</p>
+
+<pre><code>class Hello(object):
+    def hello(self, name='world'):
+        print('Hello, %s.' % name)
+</code></pre>
+
+<p>当Python解释器载入hello模块时，就会依次执行该模块的所有语句，执行结果就是动态创建出一个Hello的class对象，测试如下：</p>
+
+<p><code>&gt;&gt;&gt; from hello import Hello</code></p>
+
+<p><code>&gt;&gt;&gt; h = Hello()</code></p>
+
+<p><code>&gt;&gt;&gt; h.hello()</code></p>
+
+<p><code>Hello, world.</code></p>
+
+<p><code>&gt;&gt;&gt; print(type(Hello))</code></p>
+
+<p><code>&lt;class 'type'&gt;</code></p>
+
+<p><code>&gt;&gt;&gt; print(type(h))</code></p>
+
+<p><code>&lt;class 'hello.Hello'&gt;</code></p>
+
+<p>type()函数可以查看一个类型或变量的类型，Hello是一个class，它的类型就是type，而h是一个实例，它的类型就是class Hello。</p>
+
+<p>我们说class的定义是运行时动态创建的，而创建class的方法就是使用type()函数。</p>
+
+<p>type()函数既可以返回一个对象的类型，又可以创建出新的类型，比如，我们可以通过type()函数创建出Hello类，而无需通过class Hello(object)...的定义：</p>
+
+<p><code>&gt;&gt; def fn(self, name='world'): # 先定义函数</code></p>
+
+<p><code>...    print('Hello, %s.' % name)</code></p>
+
+<p><code>...</code></p>
+
+<p><code>&gt;&gt;&gt; Hello = type('Hello', (object,), dict(hello=fn)) # 创建Hello class</code></p>
+
+<p><code>&gt;&gt;&gt; h = Hello()</code></p>
+
+<p><code>&gt;&gt;&gt; h.hello()</code></p>
+
+<p><code>Hello, world.</code></p>
+
+<p><code>&gt;&gt;&gt; print(type(Hello))</code></p>
+
+<p><code>&lt;class 'type'&gt;</code></p>
+
+<p><code>&gt;&gt;&gt; print(type(h))</code></p>
+
+<p><code>&lt;class '__main__.Hello'&gt;</code></p>
+
+<p>要创建一个class对象，type()函数依次传入3个参数：</p>
+
+<ul>
+<li>class的名称；</li>
+<li>继承的父类集合，注意Python支持多重继承，如果只有一个父类，别忘了tuple的单元素写法；</li>
+<li>class的方法名称与函数绑定，这里我们把函数fn绑定到方法名hello上。</li>
+</ul>
+
+
+<p>通过type()函数创建的类和直接写class是完全一样的，因为Python解释器遇到class定义时，仅仅是扫描一下class定义的语法，然后调用type()函数创建出class。</p>
+
+<p>正常情况下，我们都用class Xxx...来定义类，但是，type()函数也允许我们动态创建出类来，也就是说，动态语言本身支持运行期动态创建类，这和静态语言有非常大的不同，要在静态语言运行期创建类，必须构造源代码字符串再调用编译器，或者借助一些工具生成字节码实现，本质上都是动态编译，会非常复杂。</p>
+
+<p>断言</p>
+
+<p>凡是用print()来辅助查看的地方，都可以用断言（assert）来替代：</p>
+
+<pre><code>def foo(s):
+    n = int(s)
+    assert n != 0, 'n is zero!'
+    return 10 / n
+
+def main():
+    foo('0')
+</code></pre>
+
+<p>assert的意思是，表达式n != 0应该是True，否则，根据程序运行的逻辑，后面的代码肯定会出错。</p>
+
+<p>如果断言失败，assert语句本身就会抛出AssertionError</p>
+
+<p>logging</p>
+
+<p>把print()替换为logging是第3种方式，和assert比，logging不会抛出错误，而且可以输出到文件：</p>
+
+<pre><code>import logging
+
+s = '0'
+n = int(s)
+logging.info('n = %d' % n)
+print(10 / n)
+</code></pre>
+
+<p>logging.info()就可以输出一段文本。运行，发现除了ZeroDivisionError，没有任何信息。怎么回事？</p>
+
+<p>别急，在import logging之后添加一行配置再试试：</p>
+
+<pre><code>import logging
+logging.basicConfig(level=logging.INFO)
+</code></pre>
+
+<p>看到输出了：</p>
+
+<pre><code>$ python3 err.py
+INFO:root:n = 0
+Traceback (most recent call last):
+File "err.py", line 8, in &lt;module&gt;
+    print(10 / n)
+ZeroDivisionError: division by zero
+</code></pre>
+
+<p>这就是logging的好处，它允许你指定记录信息的级别，有debug，info，warning，error等几个级别，当我们指定level=INFO时，logging.debug就不起作用了。同理，指定level=WARNING后，debug和info就不起作用了。这样一来，你可以放心地输出不同级别的信息，也不用删除，最后统一控制输出哪个级别的信息。</p>
+
+<p>logging的另一个好处是通过简单的配置，一条语句可以同时输出到不同的地方，比如console和文件。</p>
+
+<h2>pdb</h2>
+
+<p>第4种方式是启动Python的调试器pdb，让程序以单步方式运行，可以随时查看运行状态。我们先准备好程序：</p>
+
+<pre><code># err.py
+s = '0'
+n = int(s)
+print(10 / n)
+</code></pre>
+
+<p>然后启动：</p>
+
+<pre><code>$ python3 -m pdb err.py
+&gt; /Users/michael/Github/learn-python3/samples/debug/err.py(2)&lt;module&gt;()
+-&gt; s = '0'
+</code></pre>
+
+<p>以参数-m pdb启动后，pdb定位到下一步要执行的代码-> s = '0'。输入命令l来查看代码：</p>
+
+<pre><code>(Pdb) l
+1     # err.py
+2  -&gt; s = '0'
+3     n = int(s)
+4     print(10 / n)
+</code></pre>
+
+<p>输入命令n可以单步执行代码：</p>
+
+<pre><code>(Pdb) n
+&gt; /Users/michael/Github/learn-python3/samples/debug/err.py(3)&lt;module&gt;()
+-&gt; n = int(s)
+(Pdb) n
+&gt; /Users/michael/Github/learn-python3/samples/debug/err.py(4)&lt;module&gt;()
+-&gt; print(10 / n)
+</code></pre>
+
+<p>任何时候都可以输入命令p 变量名来查看变量：</p>
+
+<pre><code>(Pdb) p s
+'0'
+(Pdb) p n
+0
+</code></pre>
+
+<p>输入命令q结束调试，退出程序：</p>
+
+<pre><code>(Pdb) q
+</code></pre>
+
+<p>这种通过pdb在命令行调试的方法理论上是万能的，但实在是太麻烦了，如果有一千行代码，要运行到第999行得敲多少命令啊。还好，我们还有另一种调试方法。</p>
+
+<pre><code>pdb.set_trace()
+</code></pre>
+
+<p>这个方法也是用pdb，但是不需要单步执行，我们只需要import pdb，然后，在可能出错的地方放一个pdb.set_trace()，就可以设置一个断点：</p>
+
+<pre><code># err.py
+import pdb
+
+s = '0'
+n = int(s)
+pdb.set_trace() # 运行到这里会自动暂停
+print(10 / n)
+</code></pre>
+
+<p>运行代码，程序会自动在pdb.set_trace()暂停并进入pdb调试环境，可以用命令p查看变量，或者用命令c继续运行：</p>
+
+<pre><code>$ python3 err.py
+&gt; /Users/michael/Github/learn-python3/samples/debug/err.py(7)&lt;module&gt;()
+-&gt; print(10 / n)
+(Pdb) p n
+0
+(Pdb) c
+Traceback (most recent call last):
+File "err.py", line 7, in &lt;module&gt;
+    print(10 / n)
+ZeroDivisionError: division by zero
+</code></pre>
+
+<p>这个方式比直接启动pdb单步调试效率要高很多，但也高不到哪去。</p>
+
+<p>读文件</p>
+
+<p>要以读文件的模式打开一个文件对象，使用Python内置的open()函数，传入文件名和标示符：</p>
+
+<p><code>&gt;&gt;&gt; f = open('/Users/michael/test.txt', 'r')</code></p>
+
+<p>标示符'r'表示读，这样，我们就成功地打开了一个文件。</p>
+
+<p>如果文件不存在，open()函数就会抛出一个IOError的错误，并且给出错误码和详细的信息告诉你文件不存在：</p>
+
+<pre><code>&gt;&gt;&gt; f=open('/Users/michael/notfound.txt', 'r')
+Traceback (most recent call last):
+File "&lt;stdin&gt;", line 1, in &lt;module&gt;
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/michael/notfound.txt'
+</code></pre>
+
+<p>如果文件打开成功，接下来，调用read()方法可以一次读取文件的全部内容，Python把内容读到内存，用一个str对象表示：</p>
+
+<pre><code>&gt;&gt;&gt; f.read()
+'Hello, world!'
+</code></pre>
+
+<p>最后一步是调用close()方法关闭文件。文件使用完毕后必须关闭，因为文件对象会占用操作系统的资源，并且操作系统同一时间能打开的文件数量也是有限的：</p>
+
+<pre><code>&gt;&gt;&gt; f.close()
+</code></pre>
+
+<p>由于文件读写时都有可能产生IOError，一旦出错，后面的f.close()就不会调用。所以，为了保证无论是否出错都能正确地关闭文件，我们可以使用try ... finally来实现：</p>
+
+<pre><code>try:
+    f = open('/path/to/file', 'r')
+    print(f.read())
+finally:
+    if f:
+        f.close()
+</code></pre>
+
+<p>但是每次都这么写实在太繁琐，所以，Python引入了with语句来自动帮我们调用close()方法：</p>
+
+<pre><code>with open('/path/to/file', 'r') as f:
+    print(f.read())
+</code></pre>
+
+<p>这和前面的try ... finally是一样的，但是代码更佳简洁，并且不必调用f.close()方法。</p>
+
+<p>调用read()会一次性读取文件的全部内容，如果文件有10G，内存就爆了，所以，要保险起见，可以反复调用read(size)方法，每次最多读取size个字节的内容。另外，调用readline()可以每次读取一行内容，调用readlines()一次读取所有内容并按行返回list。因此，要根据需要决定怎么调用。</p>
+
+<p>如果文件很小，read()一次性读取最方便；如果不能确定文件大小，反复调用read(size)比较保险；如果是配置文件，调用readlines()最方便：</p>
+
+<pre><code>for line in f.readlines():
+    print(line.strip()) # 把末尾的'\n'删掉
+</code></pre>
+
+<p>二进制文件</p>
+
+<p>前面讲的默认都是读取文本文件，并且是UTF-8编码的文本文件。要读取二进制文件，比如图片、视频等等，用'rb'模式打开文件即可：</p>
+
+<p><code>&gt;&gt;&gt; f = open('/Users/michael/test.jpg', 'rb')</code></p>
+
+<p><code>&gt;&gt;&gt; f.read()</code></p>
+
+<p><code>b'\xff\xd8\xff\xe1\x00\x18Exif\x00\x00...' # 十六进制表示的字节</code></p>
+
+<p>字符编码</p>
+
+<p>要读取非UTF-8编码的文本文件，需要给open()函数传入encoding参数，例如，读取GBK编码的文件：</p>
+
+<p><code>&gt;&gt;&gt; f = open('/Users/michael/gbk.txt', 'r', encoding='gbk')</code></p>
+
+<p><code>&gt;&gt;&gt; f.read()</code></p>
+
+<p><code>'测试'</code></p>
+
+<p>遇到有些编码不规范的文件，你可能会遇到UnicodeDecodeError，因为在文本文件中可能夹杂了一些非法编码的字符。遇到这种情况，open()函数还接收一个errors参数，表示如果遇到编码错误后如何处理。最简单的方式是直接忽略：</p>
+
+<p><code>&gt;&gt;&gt; f = open('/Users/michael/gbk.txt', 'r', encoding='gbk', errors='ignore')</code></p>
+
+<p>写文件</p>
+
+<p>写文件和读文件是一样的，唯一区别是调用open()函数时，传入标识符'w'或者'wb'表示写文本文件或写二进制文件：</p>
+
+<p><code>&gt;&gt;&gt; f = open('/Users/michael/test.txt', 'w')</code></p>
+
+<p><code>&gt;&gt;&gt; f.write('Hello, world!')</code></p>
+
+<p><code>&gt;&gt;&gt; f.close()</code></p>
+
+<p>你可以反复调用write()来写入文件，但是务必要调用f.close()来关闭文件。当我们写文件时，操作系统往往不会立刻把数据写入磁盘，而是放到内存缓存起来，空闲的时候再慢慢写入。只有调用close()方法时，操作系统才保证把没有写入的数据全部写入磁盘。忘记调用close()的后果是数据可能只写了一部分到磁盘，剩下的丢失了。所以，还是用with语句来得保险：</p>
+
+<pre><code>with open('/Users/michael/test.txt', 'w') as f:
+    f.write('Hello, world!')
+</code></pre>
+
+<p>要写入特定编码的文本文件，请给open()函数传入encoding参数，将字符串自动转换成指定编码。</p>
+
+<h2>小结</h2>
+
+<p>在Python中，文件读写是通过open()函数打开的文件对象完成的。使用with语句操作文件IO是个好习惯。</p>
+
+<p>Python的os模块封装了操作系统的目录和文件操作，要注意这些函数有的在os模块中，有的在os.path模块中。</p>
+
+<p>在Thread和Process中，应当优选Process，因为Process更稳定，而且，Process可以分布到多台机器上，而Thread最多只能分布到同一台机器的多个CPU上。</p>
+
+<h1>Python Cli 编程</h1>
+
+<h2>什么是Cli</h2>
+
+<h2>Click工具</h2>
+
+<p>一个函数使用click.command()来装饰成一个callable的脚本。</p>
+
+<pre><code>import click
+
+@click.command()
+def hello():
+    click.echo('Hello World!')
+</code></pre>
+
+<p>装饰器将这个函数变为一个Command，然后可以执行。</p>
+
+<pre><code>if __name__ == '__main__':
+    hello()
+</code></pre>
+
+<p>使用 $ python hello.py</p>
+
+<p>得到  Hello World！</p>
+
+<p>同时还有help页面生成：</p>
+
+<pre><code>$ python hello.py --help
+Usage: hello.py [OPTIONS]
+
+Options:
+    --help  Show this message and exit.
+</code></pre>
+
+<h3>Virtual Environment 工具</h3>
+
+<p>Virtual Env为不同Python环境提供了不同依赖关系。</p>
+
+<p>建立新虚拟环境：</p>
+
+<p>$ virtualenv venv</p>
+
+<p>启动虚拟环境<br/>
+$ . venv/bin/activate</p>
+
+<p>关闭虚拟环境    <br/>
+$ deactivate</p>
+
+<h3>Setuptools</h3>
+
+<p>编写yourscript.py</p>
+
+<pre><code>import click
+
+@click.command()
+def cli():
+    """Example script."""
+    click.echo('Hello World!')
+</code></pre>
+
+<p>再编写对应的setup.py</p>
+
+<pre><code>from setuptools import setup
+
+setup(
+    name='yourscript',
+    version='0.1',
+    py_modules=['yourscript'],
+    install_requires=[
+        'Click',
+    ],
+    entry_points='''
+        [console_scripts]
+        yourscript=yourscript:cli
+    ''',
+)
+</code></pre>
+
+<p>用$ python setup.py install/develop 完成安装/测试，之后可以使用该命令行。</p>
+
+<p>如果有更复杂的命令行结构，则需要修改entry_points的路径。</p>
+
+<h3>Nesting command</h3>
+
+<p>Command 可以attach在Group类型的其他Command上。这样使得nesting变得可能。下面是一个实现处理数据库的两个command。</p>
+
+<pre><code>@click.group()
+def cli():
+pass
+
+@click.command()
+def initdb():
+    click.echo('Initialized the database')
+
+@click.command()
+def dropdb():
+    click.echo('Dropped the database')
+
+cli.add_command(initdb)
+cli.add_command(dropdb)
+</code></pre>
+
+<p>可以简写作：</p>
+
+<pre><code>@click.group()
+def cli():
+    pass
+
+@cli.command()
+def initdb():
+    click.echo('Initialized the database')
+
+@cli.command()
+def dropdb():
+    click.echo('Dropped the database')
+</code></pre>
+
+<h3>Parameters</h3>
+
+<p>使用option()和argument()来添加参数。</p>
+
+<pre><code>@click.command()
+@click.option('--count', default=1, help='number of greetings')
+@click.argument('name')
+def hello(count, name):
+    for x in range(count):
+        click.echo('Hello %s!' % name)
+</code></pre>
+
+<p>--count=num，让num给count赋值；name让promtp来提示输入。</p>
+
+<h4>option和argument 的区别</h4>
+
+<p>最好只在subcommands和input filenames或者URL的地方使用arguments，其他地方使用option。</p>
+
+<p>option的不同点在于：
+- option可以有对缺失输入的自动提示
+- 可以用作flag
+- option可以从环境变量中获取，argument不可以
+- option在帮助页面中有详细说明，argument没有</p>
+
+<p>argument的不同点在于：</p>
+
+<p>它可以接收任意多的参数，而option一般只能接收固定值的参数，通常为1.</p>
+
+<h4>parameter types</h4>
+
+<p>添加option() 装饰器就可以为command添加option.</p>
+
+<p>基本Option：</p>
+
+<p>The most basic option is a value option. These options accept one argument which is a value. If no type is provided, the type of the default value is used. If no default value is provided, the type is assumed to be STRING. By default, the name of the parameter is the first long option defined; otherwise the first short one is used.</p>
+
+<pre><code>@click.command()
+@click.option('--n', default=1)
+def dots(n):
+    click.echo('.' * n)
+</code></pre>
+
+<p>And on the command line:</p>
+
+<pre><code>$ dots --n=2
+</code></pre>
+
+<p>..</p>
+
+<p>In this case the option is of type INT because the default value is an integer.</p>
+
+<p>多值Option:</p>
+
+<p>Sometimes, you have options that take more than one argument. For options, only a fixed number of arguments is supported. This can be configured by the nargs parameter. The values are then stored as a tuple.</p>
+
+<pre><code>@click.command()
+@click.option('--pos', nargs=2, type=float)
+def findme(pos):
+    click.echo('%s / %s' % pos)
+And on the command line:
+
+$ findme --pos 2.0 3.0
+2.0 / 3.0
+</code></pre>
+
+<p>Tuple:</p>
+
+<p>Tuple可以逐一为输入指定类型。</p>
+
+<p>you can directly specify a tuple as type:</p>
+
+<pre><code>@click.command()
+@click.option('--item', type=(unicode, int))
+def putitem(item):
+    click.echo('name=%s id=%d' % item)
+</code></pre>
+
+<p>And on the command line:</p>
+
+<pre><code>$ putitem --item peter 1338
+name=peter id=1338
+</code></pre>
+
+<p>By using a tuple literal as type, nargs gets automatically set to the length of the tuple and the click.Tuple type is automatically used. The above example is thus equivalent to this:</p>
+
+<pre><code>@click.command()
+@click.option('--item', nargs=2, type=click.Tuple([unicode, int]))
+def putitem(item):
+    click.echo('name=%s id=%d' % item)
+</code></pre>
+
+<p>Multiple Options：</p>
+
+<p>使用 -m 来标识多个option。</p>
+
+<pre><code>@click.command()
+@click.option('--message', '-m', multiple=True)
+def commit(message):
+    click.echo('\n'.join(message))
+</code></pre>
+
+<p>And on the command line:</p>
+
+<pre><code>$ commit -m foo -m bar
+foo
+bar
+</code></pre>
+
+<p>Counting:</p>
+
+<pre><code>@click.command()
+@click.option('-v', '--verbose', count=True)
+def log(verbose):
+    click.echo('Verbosity: %s' % verbose)
+</code></pre>
+
+<p>And on the command line:</p>
+
+<pre><code>$ log -vvv
+Verbosity: 3
+</code></pre>
+
+<p>Boolean Flags:</p>
+
+<p>使用/来表示Flag的两个选择。</p>
+
+<p>Example:</p>
+
+<pre><code>import sys
+
+@click.command()
+@click.option('--shout/--no-shout', default=False)
+def info(shout):
+    rv = sys.platform
+    if shout:
+        rv = rv.upper() + '!!!!111'
+    click.echo(rv)
+</code></pre>
+
+<p>And on the command line:</p>
+
+<pre><code>$ info --shout
+LINUX2!!!!111
+$ info --no-shout
+linux2
+</code></pre>
+
+<p>或者用is_flag来表示。</p>
+
+<pre><code>import sys
+
+@click.command()
+@click.option('--shout', is_flag=True)
+def info(shout):
+    rv = sys.platform
+    if shout:
+        rv = rv.upper() + '!!!!111'
+    click.echo(rv)
+</code></pre>
+
+<p>And on the command line:</p>
+
+<pre><code>$ info --shout
+LINUX2!!!!111
+</code></pre>
+
+<p>Feature Switches：</p>
+
+<p>In addition to boolean flags, there are also feature switches. These are implemented by setting multiple options to the same parameter name and defining a flag value. Note that by providing the flag_value parameter, Click will implicitly set is_flag=True.</p>
+
+<pre><code>import sys
+
+@click.command()
+@click.option('--upper', 'transformation', flag_value='upper',
+          default=True)
+@click.option('--lower', 'transformation', flag_value='lower')
+def info(transformation):
+    click.echo(getattr(sys.platform, transformation)())
+</code></pre>
+
+<p>And on the command line:</p>
+
+<pre><code>$ info --upper
+LINUX2
+$ info --lower
+linux2
+$ info
+LINUX2
+</code></pre>
+
+<p>Choice Options:</p>
+
+<p>Sometimes, you want to have a parameter be a choice of a list of values. In that case you can use Choice type. It can be instantiated with a list of valid values.</p>
+
+<p>Example:</p>
+
+<pre><code>@click.command()
+@click.option('--hash-type', type=click.Choice(['md5', 'sha1']))
+def digest(hash_type):
+    click.echo(hash_type)
+</code></pre>
+
+<p>What it looks like:</p>
+
+<pre><code>$ digest --hash-type=md5
+md5
+
+$ digest --hash-type=foo
+Usage: digest [OPTIONS]
+
+Error: Invalid value for "--hash-type": invalid choice: foo. (choose from md5, sha1)
+
+$ digest --help
+Usage: digest [OPTIONS]
+
+Options:
+--hash-type [md5|sha1]
+--help                  Show this message and exit.
+</code></pre>
+
+<p>Prompting:</p>
+
+<p>Example:</p>
+
+<pre><code>@click.command()
+@click.option('--name', prompt=True)
+def hello(name):
+    click.echo('Hello %s!' % name)
+</code></pre>
+
+<p>And what it looks like:</p>
+
+<pre><code>$ hello --name=John
+Hello John!
+$ hello
+Name: John
+Hello John!
+</code></pre>
+
+<p>If you are not happy with the default prompt string, you can ask for a different one:</p>
+
+<pre><code>@click.command()
+@click.option('--name', prompt='Your name please')
+def hello(name):
+    click.echo('Hello %s!' % name)
+</code></pre>
+
+<p>What it looks like:</p>
+
+<pre><code>$ hello
+Your name please: John
+Hello John!
+</code></pre>
+
+<p>Password Prompts：</p>
+
+<p>Click also supports hidden prompts and asking for confirmation. This is useful for password input:</p>
+
+<pre><code>@click.command()
+@click.option('--password', prompt=True, hide_input=True,
+          confirmation_prompt=True)
+def encrypt(password):
+    click.echo('Encrypting password to %s' % password.encode('rot13'))
+</code></pre>
+
+<p>What it looks like:</p>
+
+<pre><code>$ encrypt
+Password: 
+Repeat for confirmation: 
+Encrypting password to frperg
+</code></pre>
+
+<p>Because this combination of parameters is quite common, this can also be replaced with the password_option() decorator:</p>
+
+<pre><code>@click.command()
+@click.password_option()
+def encrypt(password):
+    click.echo('Encrypting password to %s' % password.encode('rot13'))
+</code></pre>
+
+<p>Dynamic Defaults for Prompts：</p>
+
+<p>If you want to let the user configure the default value, but still be prompted if the option isn’t specified on the command line, you can do so by supplying a callable as the default value. For example, to get a default from the environment:</p>
+
+<pre><code>@click.command()
+@click.option('--username', prompt=True,
+          default=lambda: os.environ.get('USER', ''))
+def hello(username):
+    print("Hello,", username)
+</code></pre>
+
+<p>Yes Parameters：</p>
+
+<p>For dangerous operations, it’s very useful to be able to ask a user for confirmation. This can be done by adding a boolean --yes flag and asking for confirmation if the user did not provide it and to fail in a callback:</p>
+
+<pre><code>def abort_if_false(ctx, param, value):
+    if not value:
+        ctx.abort()
+
+@click.command()
+@click.option('--yes', is_flag=True, callback=abort_if_false,
+          expose_value=False,
+          prompt='Are you sure you want to drop the db?')
+def dropdb():
+    click.echo('Dropped all tables!')
+</code></pre>
+
+<p>And what it looks like on the command line:</p>
+
+<pre><code>$ dropdb
+Are you sure you want to drop the db? [y/N]: n
+Aborted!
+$ dropdb --yes
+Dropped all tables!
+</code></pre>
+
+<p>Because this combination of parameters is quite common, this can also be replaced with the confirmation_option() decorator:</p>
+
+<pre><code>@click.command()
+@click.confirmation_option(prompt='Are you sure you want to drop the db?')
+def dropdb():
+    click.echo('Dropped all tables!')
+</code></pre>
+
+<h3>Arguments</h3>
+
+<h4>Basic Arguments</h4>
+
+<p>The most basic option is a simple string argument of one value. If no type is provided, the type of the default value is used, and if no default value is provided, the type is assumed to be STRING.</p>
+
+<p>Example:</p>
+
+<pre><code>@click.command()
+@click.argument('filename')
+def touch(filename):
+    click.echo(filename)
+</code></pre>
+
+<p>And what it looks like:</p>
+
+<pre><code>$ touch foo.txt
+foo.txt
+</code></pre>
+
+<h4>Variadic Arguments</h4>
+
+<p>The second most common version is variadic arguments where a specific (or unlimited) number of arguments is accepted. This can be controlled with the nargs parameter. If it is set to -1, then an unlimited number of arguments is accepted.</p>
+
+<p>The value is then passed as a tuple. Note that only one argument can be set to nargs=-1, as it will eat up all arguments.</p>
+
+<p>Example:</p>
+
+<pre><code>@click.command()
+@click.argument('src', nargs=-1)
+@click.argument('dst', nargs=1)
+def copy(src, dst):
+    for fn in src:
+        click.echo('move %s to folder %s' % (fn, dst))
+</code></pre>
+
+<p>And what it looks like:</p>
+
+<pre><code>$ copy foo.txt bar.txt my_folder
+move foo.txt to folder my_folder
+move bar.txt to folder my_folder
+</code></pre>
+
+<h4>File Arguments</h4>
+
+<p>Click supports this through the click.File type which intelligently handles files for you. It also deals with Unicode and bytes correctly for all versions of Python so your script stays very portable.</p>
+
+<p>Example:</p>
+
+<pre><code>@click.command()
+@click.argument('input', type=click.File('rb'))
+@click.argument('output', type=click.File('wb'))
+def inout(input, output):
+    while True:
+        chunk = input.read(1024)
+        if not chunk:
+            break
+        output.write(chunk)
+</code></pre>
+
+<p>And what it does:</p>
+
+<pre><code>$ inout - hello.txt
+hello
+^D
+$ inout hello.txt -
+hello
+</code></pre>
+
+<h4>Environment Variables</h4>
+
+<p>Like options, arguments can also grab values from an environment variable. Unlike options, however, this is only supported for explicitly named environment variables.</p>
+
+<p>Example usage:</p>
+
+<pre><code>@click.command()
+@click.argument('src', envvar='SRC', type=click.File('r'))
+def echo(src):
+    click.echo(src.read())
+</code></pre>
+
+<p>And from the command line:
+export的作用注意一下
+    $ export SRC=hello.txt
+    $ echo
+    Hello World!</p>
+
+<p>In that case, it can also be a list of different environment variables where the first one is picked.</p>
+
+<p>Generally, this feature is not recommended because it can cause the user a lot of confusion.</p>
+
+<h3>User Input Prompts</h3>
+
+<h4>Input Prompts</h4>
+
+<p>手动地询问用户输入，使用prompt()，默认情况下，收入一个string，也可以指定输入的值类型。</p>
+
+<pre><code>value = click.prompt('Please enter a valid integer', type=int)
+</code></pre>
+
+<p>设置默认值。</p>
+
+<pre><code>value = click.prompt('Please enter a number', default=42.0)
+</code></pre>
+
+<h4>Confirmation Prompts</h4>
+
+<p>使用confirm()来与用户确认是否执行。</p>
+
+<pre><code>if click.confirm('Do you want to continue?'):
+click.echo('Well done!')
+</code></pre>
+
+<p>设置默认值。</p>
+
+<pre><code>click.confirm('Do you want to continue?', abort=True)
+</code></pre>
+
+<h3>Documenting Scripts</h3>
+
+<h4>Help Text</h4>
+
+<p>Simple example:</p>
+
+<pre><code>@click.command()
+@click.option('--count', default=1, help='number of greetings')
+@click.argument('name')
+def hello(count, name):
+    """This script prints hello NAME COUNT times."""
+    for x in range(count):
+        click.echo('Hello %s!' % name)
+</code></pre>
+
+<p>And what it looks like:</p>
+
+<pre><code>$ hello --help
+Usage: hello [OPTIONS] NAME
+
+This script prints hello NAME COUNT times.
+
+Options:
+--count INTEGER  number of greetings
+--help           Show this message and exit.
+</code></pre>
+
+<h3>Utilities</h3>
+
+<h4>打印到Stdout</h4>
+
+<p>使用click.echo()，句尾自动添加一个换行。</p>
+
+<pre><code>click.echo(b'\xe2\x98\x83', nl=False)
+click.echo('Hello World!', err=True)
+</code></pre>
+
+<h4>ANSI 颜色</h4>
+
+<p>使用Colorama来添加颜色。</p>
+
+<p>For styling a string, the style() function can be used:</p>
+
+<pre><code>import click
+
+click.echo(click.style('Hello World!', fg='green'))
+click.echo(click.style('Some more text', bg='blue', fg='white'))
+click.echo(click.style('ATTENTION', blink=True, bold=True))
+</code></pre>
+
+<p>The combination of echo() and style() is also available in a single function called secho():</p>
+
+<pre><code>click.secho('Hello World!', fg='green')
+click.secho('Some more text', bg='blue', fg='white')
+click.secho('ATTENTION', blink=True, bold=True)
+</code></pre>
+
+<h4>Pager Support</h4>
+
+<p>使用pager来给大段文字分页。</p>
+
+<pre><code>@click.command()
+def less():
+    click.echo_via_pager('\n'.join('Line %d' % idx
+                               for idx in range(200)))
+</code></pre>
+
+<h4>Screen Clearing</h4>
+
+<pre><code>import click
+click.clear()
+</code></pre>
+
+<h4>Getting Characters from Terminal</h4>
+
+<pre><code>import click
+
+click.echo('Continue? [yn] ', nl=False)
+c = click.getchar()
+click.echo()
+if c == 'y':
+    click.echo('We will go on')
+elif c == 'n':
+    click.echo('Abort!')
+else:
+    click.echo('Invalid input :(')
+</code></pre>
+
+<h4>Waiting for Key Press</h4>
+
+<pre><code>import click
+click.pause()
+</code></pre>
+
+<h4>Showing Progress Bars</h4>
+
+<p>The basic usage is very simple: the idea is that you have an iterable that you want to operate on. For each item in the iterable it might take some time to do processing. So say you have a loop like this:</p>
+
+<p>for user in all_the_users_to_process:</p>
+
+<pre><code>modify_the_user(user)
+</code></pre>
+
+<p>To hook this up with an automatically updating progress bar, all you need to do is to change the code to this:</p>
+
+<pre><code>import click
+
+with click.progressbar(all_the_users_to_process) as bar:
+    for user in bar:
+        modify_the_user(user)
+</code></pre>
+
+<p>Click will then automatically print a progress bar to the terminal and calculate the remaining time for you. The calculation of remaining time requires that the iterable has a length. If it does not have a length but you know the length, you can explicitly provide it:</p>
+
+<pre><code>with click.progressbar(all_the_users_to_process,
+                   length=number_of_users) as bar:
+    for user in bar:
+        modify_the_user(user)
+</code></pre>
+
+<p>Another useful feature is to associate a label with the progress bar which will be shown preceding the progress bar:</p>
+
+<pre><code>with click.progressbar(all_the_users_to_process,
+                   label='Modifying user accounts',
+                   length=number_of_users) as bar:
+    for user in bar:
+        modify_the_user(user)
+</code></pre>
+
+<p>Sometimes, one may need to iterate over an external iterator, and advance the progress bar irregularly. To do so, you need to specify the length (and no iterable), and use the update method on the context return value instead of iterating directly over it:</p>
+
+<pre><code>with click.progressbar(length=total_size,
+                   label='Unzipping archive') as bar:
+    for archive in zip_file:
+        archive.extract()
+        bar.update(archive.size)
+</code></pre>
+
+<h3>Python 装饰器</h3>
+
+<h4>基本语法</h4>
+
+<p>语法糖:</p>
+
+<pre><code>@bar
+def foo():
+    print "foo"
+</code></pre>
+
+<p>其等价于</p>
+
+<pre><code>def foo():
+    print "foo"
+foo = bar(foo)
+</code></pre>
+
+<p>无参数装饰器：</p>
+
+<pre><code>def foo(func):
+    print 'decorate foo'
+    return func
+
+@foo
+def bar():
+    print 'bar'
+
+bar()       
+</code></pre>
+
+<p>foo 函数被用作装饰器，其本身接收一个函数对象作为参数，然后做一些工作后，返回接收的参数，供外界调用。
+注意: 时刻牢记 @foo 只是一个语法糖，其本质是 foo = bar(foo)</p>
+
+<p>带参数装饰器：</p>
+
+<pre><code>import time  
+
+def function_performance_statistics(trace_this=True):  
+    if trace_this:  
+       def performace_statistics_delegate(func):  
+            def counter(*args, **kwargs):  
+                start = time.clock()  
+                func(*args, **kwargs)  
+                end =time.clock()  
+                print 'used time: %d' % (end - start, )  
+            return counter  
+    else:  
+       def performace_statistics_delegate(func):  
+            return func  
+    return performace_statistics_delegate  
+
+@function_performance_statistics(True)  
+def add(x, y):  
+    time.sleep(3)  
+    print 'add result: %d' % (x + y,)  
+
+@function_performance_statistics(False)  
+def mul(x, y=1):  
+    print 'mul result: %d' % (x * y,)  
+
+add(1, 1)  
+mul(10) 
+</code></pre>
+
+<p>上述代码中装饰器的调用等价于</p>
+
+<pre><code>add = function_performance_statistics(True)(add(1, 1))  
+mul = function_performance_statistics(False)(mul(10))  
+</code></pre>
+
+<p>类的装饰器：</p>
+
+<pre><code>def bar(dummy):  
+    print 'bar'  
+
+def inject(cls):  # cls是被修改的类
+    cls.bar = bar  
+    return cls  
+
+@inject  
+class Foo(object):  
+    pass  
+
+foo = Foo()  
+foo.bar() 
+</code></pre>
+
+<p>上述代码的 inject 装饰器为类动态的添加一个 bar 方法，因为类在调用非静态方法的时候会传进一个self 指针，因此 bar 的第一个参数我们简单的忽略即可。</p>
+
+<p>类装饰器：</p>
+
+<p>类装饰器相比函数装饰器，具有灵活度大，高内聚、封装性等优点。其实现起来主要是靠类内部的 <strong>call</strong> 方法，当使用 @ 形式将装饰器附加到函数上时，就会调用此方法。</p>
+
+<pre><code>class Foo(object):  
+    def __init__(self, func):  
+        super(Foo, self).__init__()  
+        self._func = func  
+
+    def __call__(self):  
+        print 'class decorator'  
+        self._func()  
+
+@Foo  
+def bar():  
+    print 'bar'  
+
+bar() 
+</code></pre>
+
+<p>相当于给bar函数添加了类的属性。</p>
+
+<h4>调用时机</h4>
+
+<p>在相同 .py 文件中，装饰器对所装饰的函数只进行一次装饰，不会每次调用相应函数时都重新装饰</p>
+</body>
+</html>

@@ -1,0 +1,1115 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<style>
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote {
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", Arial, sans-serif;
+    font-size: 13px;
+    line-height: 18px;
+    color: #737373;
+    background-color: white;
+    margin: 10px 13px 10px 13px;
+}
+table {
+	margin: 10px 0 15px 0;
+	border-collapse: collapse;
+}
+td,th {	
+	border: 1px solid #ddd;
+	padding: 3px 10px;
+}
+th {
+	padding: 5px 10px;	
+}
+
+a {
+    color: #0069d6;
+}
+a:hover {
+    color: #0050a3;
+    text-decoration: none;
+}
+a img {
+    border: none;
+}
+p {
+    margin-bottom: 9px;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #404040;
+    line-height: 36px;
+}
+h1 {
+    margin-bottom: 18px;
+    font-size: 30px;
+}
+h2 {
+    font-size: 24px;
+}
+h3 {
+    font-size: 18px;
+}
+h4 {
+    font-size: 16px;
+}
+h5 {
+    font-size: 14px;
+}
+h6 {
+    font-size: 13px;
+}
+hr {
+    margin: 0 0 19px;
+    border: 0;
+    border-bottom: 1px solid #ccc;
+}
+blockquote {
+    padding: 13px 13px 21px 15px;
+    margin-bottom: 18px;
+    font-family:georgia,serif;
+    font-style: italic;
+}
+blockquote:before {
+    content:"\201C";
+    font-size:40px;
+    margin-left:-10px;
+    font-family:georgia,serif;
+    color:#eee;
+}
+blockquote p {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 18px;
+    margin-bottom: 0;
+    font-style: italic;
+}
+code, pre {
+    font-family: Monaco, Andale Mono, Courier New, monospace;
+}
+code {
+    background-color: #fee9cc;
+    color: rgba(0, 0, 0, 0.75);
+    padding: 1px 3px;
+    font-size: 12px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+pre {
+    display: block;
+    padding: 14px;
+    margin: 0 0 18px;
+    line-height: 16px;
+    font-size: 11px;
+    border: 1px solid #d9d9d9;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+pre code {
+    background-color: #fff;
+    color:#737373;
+    font-size: 11px;
+    padding: 0;
+}
+sup {
+    font-size: 0.83em;
+    vertical-align: super;
+    line-height: 0;
+}
+* {
+	-webkit-print-color-adjust: exact;
+}
+@media screen and (min-width: 914px) {
+    body {
+        width: 854px;
+        margin:10px auto;
+    }
+}
+@media print {
+	body,code,pre code,h1,h2,h3,h4,h5,h6 {
+		color: black;
+	}
+	table, pre {
+		page-break-inside: avoid;
+	}
+}
+</style>
+<title>二叉树遍历</title>
+
+</head>
+<body>
+<h1>二叉树遍历</h1>
+
+<p><a href="../index.html">返回首页</a></p>
+
+<p><a href="./algorithmsIndex.html">返回算法分类分析</a></p>
+
+<h3>第一题 Same Tree</h3>
+
+<p>Given two binary trees, write a function to check if they are equal or not.</p>
+
+<p>Two binary trees are considered equal if they are structurally identical and the nodes have the same value.</p>
+
+<h3>解法</h3>
+
+<pre><code>class Solution(object):
+
+def isSameTree(self, p, q):
+
+    """
+
+    :type p: TreeNode
+
+    :type q: TreeNode
+
+    :rtype: bool
+
+    """
+
+    if p is None and q is None:
+
+        return True
+
+    elif p is not None and q is not None:
+
+        if p.val == q.val and self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right):
+
+            return True
+
+        else:
+
+            return False
+
+    else:
+
+        return False
+</code></pre>
+
+<h3>第二题  Binary Tree Preorder Traversal</h3>
+
+<p>Given a binary tree, return the preorder traversal of its nodes' values.</p>
+
+<p>For example:
+Given binary tree {1,#,2,3},</p>
+
+<pre><code>1
+ \
+  2
+ /
+3
+</code></pre>
+
+<p>return [1,2,3].</p>
+
+<p>Note: Recursive solution is trivial, could you do it iteratively?</p>
+
+<h3>解法</h3>
+
+<pre><code>class Solution(object):
+
+def preorderTraversal(self, root):
+
+    """
+
+    :type root: TreeNode
+
+    :rtype: List[int]
+
+    """
+
+    stack = []
+
+    re = []
+
+    if not root: 
+
+        return re
+
+    stack.append(root)
+
+    while len(stack) &gt; 0:
+
+        tmp = stack.pop()
+
+        re.append(tmp.val)
+
+        if tmp.right:
+
+            stack.append(tmp.right)
+
+        if tmp.left:
+
+            stack.append(tmp.left)
+
+    return re
+</code></pre>
+
+<h3>第三题 Binary Tree Inorder Traversal</h3>
+
+<p>Given a binary tree, return the inorder traversal of its nodes' values.</p>
+
+<h3>解法</h3>
+
+<p>注意这里对inorder的处理</p>
+
+<pre><code>class Solution(object):
+
+def inorderTraversal(self, root):
+
+    """
+
+    :type root: TreeNode
+
+    :rtype: List[int]
+
+    """
+
+    stack = []
+
+    re = []
+
+    if not root:
+
+        return re
+
+    stack.append(root)
+
+    while len(stack) &gt; 0:
+
+        tmp = stack.pop()
+
+        if tmp.right: # 不管其他情况，右节点先放进栈
+
+            stack.append(tmp.right)
+
+            tmp.right = None # 注意这里置空
+
+        if tmp.left: # 本节点和左节点的处理
+
+            stack.append(tmp)
+
+            stack.append(tmp.left)
+
+            tmp.left = None
+
+        else:
+
+            re.append(tmp.val)
+
+    return re
+</code></pre>
+
+<h3>第四题  Binary Tree Postorder Traversal</h3>
+
+<p>Given a binary tree, return the postorder traversal of its nodes' values.</p>
+
+<h3>解法</h3>
+
+<pre><code>class Solution(object):
+
+def postorderTraversal(self, root):
+
+    """
+
+    :type root: TreeNode
+
+    :rtype: List[int]
+
+    """
+
+    stack = []
+
+    re = []
+
+    if not root: 
+
+        return re
+
+    stack.append(root)
+
+    while len(stack) &gt; 0:
+
+        tmp = stack.pop()
+
+        if tmp.left is not None or tmp.right is not None:
+
+            stack.append(tmp)
+
+            if tmp.right:
+
+                stack.append(tmp.right)
+
+                tmp.right = None
+
+            if tmp.left:
+
+                stack.append(tmp.left)
+
+                tmp.left = None
+
+        else:
+
+            re.append(tmp.val)
+
+    return re
+</code></pre>
+
+<h3>第五题 Sum Root to Leaf Numbers</h3>
+
+<p>Given a binary tree containing digits from 0-9 only, each root-to-leaf path could represent a number.</p>
+
+<p>An example is the root-to-leaf path 1->2->3 which represents the number 123.</p>
+
+<p>Find the total sum of all root-to-leaf numbers.</p>
+
+<p>For example,</p>
+
+<pre><code>    1
+   / \
+  2   3
+</code></pre>
+
+<p>The root-to-leaf path 1->2 represents the number 12.
+The root-to-leaf path 1->3 represents the number 13.</p>
+
+<p>Return the sum = 12 + 13 = 25.</p>
+
+<h3>解法</h3>
+
+<pre><code>class Solution(object):
+
+def cal(self, node, prevSum):
+
+    if not node:
+
+        return 0
+
+    if not node.left and not node.right:
+
+        return prevSum*10 + node.val
+
+    return self.cal(node.left, prevSum*10 + node.val) + self.cal(node.right, prevSum*10 + node.val)
+
+
+
+def sumNumbers(self, root):
+
+    """
+
+    :type root: TreeNode
+
+    :rtype: int
+
+    """
+
+    return self.cal(root, 0)
+</code></pre>
+
+<h3>第六题 Path Sum</h3>
+
+<p>Given a binary tree and a sum, determine if the tree has a root-to-leaf path such that adding up all the values along the path equals the given sum.</p>
+
+<p>For example:
+Given the below binary tree and sum = 22,</p>
+
+<pre><code>          5
+         / \
+        4   8
+       /   / \
+      11  13  4
+     /  \      \
+    7    2      1
+</code></pre>
+
+<p>return true, as there exist a root-to-leaf path 5->4->11->2 which sum is 22.</p>
+
+<h3>解法</h3>
+
+<p>注意这里怎样设置全局变量</p>
+
+<pre><code>class Solution(object):
+
+def __init__(self):
+
+    self.target = 0
+
+
+
+def isLeaf(self, node):
+
+    if node.left or node.right:
+
+        return False
+
+    else:
+
+        return True
+
+
+
+def cal(self, node, prevSum):
+
+    if not node:
+
+        return False
+
+    if self.isLeaf(node):
+
+        return prevSum + node.val == self.target
+
+    else:
+
+        return self.cal(node.left, prevSum + node.val) or self.cal(node.right, prevSum + node.val)
+
+
+
+def hasPathSum(self, root, sum):
+
+    """
+
+    :type root: TreeNode
+
+    :type sum: int
+
+    :rtype: bool
+
+    """
+
+    self.target = sum
+
+    return self.cal(root, 0)
+</code></pre>
+
+<h3>第七题 Path Sum II</h3>
+
+<p>Given a binary tree and a sum, find all root-to-leaf paths where each path's sum equals the given sum.</p>
+
+<p>For example:
+Given the below binary tree and sum = 22,</p>
+
+<pre><code>          5
+         / \
+        4   8
+       /   / \
+      11  13  4
+     /  \    / \
+    7    2  5   1
+</code></pre>
+
+<p>return</p>
+
+<pre><code>[
+[5,4,11,2],
+[5,8,4,5]
+]
+</code></pre>
+
+<h3>解法</h3>
+
+<pre><code>class Solution(object):
+def pathSum(self, root, sum1):
+    """
+    :type root: TreeNode
+    :type sum: int
+    :rtype: List[List[int]]
+    """
+    if root==None:
+        return []
+    stack,res=[(root,[root.val])],[]
+    while stack:
+        temp,val=stack.pop()
+        if not temp.left and not temp.right:
+            if sum(val)==sum1:
+                res.append(val)
+        if temp.left:
+            stack.append((temp.left,val+[temp.left.val]))
+        if temp.right:
+            stack.append((temp.right,val+[temp.right.val]))
+    return res
+</code></pre>
+
+<h3>第八题 Maximum Depth of Binary Tree</h3>
+
+<p>Given a binary tree, find its maximum depth.</p>
+
+<p>The maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.</p>
+
+<h3>解法</h3>
+
+<pre><code>class Solution(object):
+
+
+
+def __init__(self):
+
+    self.mDepth = 0
+
+
+
+def isLeaf(self, node):
+
+    if not node.left and not node.right:
+
+        return True
+
+    return False
+
+
+
+def depth(self, node, prevDepth):
+
+    if self.isLeaf(node) and prevDepth + 1 &gt; self.mDepth:
+
+        self.mDepth = prevDepth + 1
+
+        return
+
+    if node.left:
+
+        self.depth(node.left, prevDepth + 1)
+
+    if node.right:
+
+        self.depth(node.right, prevDepth + 1)
+
+    return 
+
+
+
+
+
+def maxDepth(self, root):
+
+    """
+
+    :type root: TreeNode
+
+    :rtype: int
+
+    """
+
+    if not root:
+
+        return 0
+
+    self.depth(root, 0)
+
+    return self.mDepth        
+</code></pre>
+
+<h3>第九题 Binary Tree Zigzag Level Order Traversal</h3>
+
+<p>Given a binary tree, return the zigzag level order traversal of its nodes' values. (ie, from left to right, then right to left for the next level and alternate between).</p>
+
+<p>For example:
+Given binary tree [3,9,20,null,null,15,7],</p>
+
+<pre><code>    3
+   / \
+  9  20
+    /  \
+   15   7
+</code></pre>
+
+<p>return its zigzag level order traversal as:</p>
+
+<pre><code>[
+[3],
+[20,9],
+[15,7]
+]        
+</code></pre>
+
+<h3>解法</h3>
+
+<pre><code>class Solution(object):
+
+def zigzagLevelOrder(self, root):
+
+    """
+
+    :type root: TreeNode
+
+    :rtype: List[List[int]]
+
+    """
+
+    if not root:
+
+        return []
+
+    tmp = []
+
+    stack = []
+
+    re = []
+
+    line = []
+
+    stack.append(root)
+
+    toggle = -1
+
+
+
+    while stack or tmp:
+
+        while len(stack) &gt; 0:
+
+            t = stack.pop()
+
+            line.append(t.val)
+
+            if toggle == -1:
+
+                if t.left:
+
+                    tmp.append(t.left)                
+
+                if t.right:
+
+                    tmp.append(t.right)
+
+            else:
+
+                if t.right:
+
+                    tmp.append(t.right)
+
+                if t.left:
+
+                    tmp.append(t.left)    
+
+        toggle = -1 * toggle
+
+        stack = tmp
+
+        tmp = []
+
+        re.append(line)
+
+        line = []
+
+    return re 
+</code></pre>
+
+<h3>第十题 Symmetric Tree</h3>
+
+<p>Given a binary tree, check whether it is a mirror of itself (ie, symmetric around its center).</p>
+
+<p>For example, this binary tree [1,2,2,3,4,4,3] is symmetric:</p>
+
+<pre><code>    1
+   / \
+  2   2
+ / \ / \
+3  4 4  3
+</code></pre>
+
+<p>But the following [1,2,2,null,3,null,3] is not:</p>
+
+<pre><code>    1
+   / \
+  2   2
+   \   \
+   3    3      
+</code></pre>
+
+<h3>解法</h3>
+
+<h4>iteratively</h4>
+
+<pre><code>class Solution(object):
+
+def isSymmetric(self, root):
+
+    """
+
+    :type root: TreeNode
+
+    :rtype: bool
+
+    """
+
+    if not root: return True
+
+    stack = []
+
+    stack.append((root.left, root.right))
+
+    while stack:
+
+        l, r = stack.pop()
+
+        if r and l:
+
+            if not l.val == r.val:
+
+                return False
+
+            else:
+
+                stack.append((l.left, r.right))
+
+                stack.append((l.right, r.left))
+
+        else:
+
+            if not l and not r:
+
+                pass
+
+            else:
+
+                 return False
+
+    return True
+</code></pre>
+
+<h4>recursively</h4>
+
+<pre><code> class Solution(object):
+
+
+
+def checkSym(self, n1, n2):
+
+    if not n1 and not n2:
+
+        return True
+
+    if n1 and n2 and n1.val == n2.val:
+
+        return self.checkSym(n1.left,n2.right) and self.checkSym(n1.right, n2.left)
+
+    return False
+
+
+
+
+
+def isSymmetric(self, root):
+
+    """
+
+    :type root: TreeNode
+
+    :rtype: bool
+
+    """
+
+    if not root: return True
+
+    return self.checkSym(root.left, root.right)   
+</code></pre>
+
+<h3>第十一题 Binary Tree Maximum Path Sum</h3>
+
+<p>Given a binary tree, find the maximum path sum.</p>
+
+<p>For this problem, a path is defined as any sequence of nodes from some starting node to any node in the tree along the parent-child connections. The path does not need to go through the root.</p>
+
+<p>For example:
+Given the below binary tree,</p>
+
+<pre><code>   1
+  / \
+ 2   3
+</code></pre>
+
+<p>Return 6.</p>
+
+<h3>解法</h3>
+
+<p>这里用path来计算这个节点往下的最大值分支。值得学习的思路。在计算完左右分支的最大值之后，更新总体最大值，同时给上一级返回最大值分支。</p>
+
+<pre><code>class Solution(object):
+
+
+
+def __init__(self):
+
+    self.maxLength = -9999
+
+
+
+def path(self, node):
+
+    if not node:
+
+        return 0
+
+    leftPath = max(self.path(node.left),0)
+
+    rightPath = max(self.path(node.right),0)
+
+    self.maxLength = max(leftPath + rightPath + node.val, self.maxLength)
+
+    return max(leftPath, rightPath) + node.val
+
+
+
+
+
+def maxPathSum(self, root):
+
+    """
+
+    :type root: TreeNode
+
+    :rtype: int
+
+    """
+
+    self.path(root)
+
+    return self.maxLength
+</code></pre>
+
+<h3>第十二题 Balanced Binary Tree</h3>
+
+<p>Given a binary tree, determine if it is height-balanced.</p>
+
+<p>For this problem, a height-balanced binary tree is defined as a binary tree in which the depth of the two subtrees of every node never differ by more than 1.</p>
+
+<h3>解法</h3>
+
+<pre><code>class Solution(object):
+
+
+
+def depth(self, node):
+
+    if node is None:
+
+        return True, 0
+
+    if node.left is None and node.right is None:
+
+        return True, 1
+
+    re1, val1 = self.depth(node.left)
+
+    re2, val2 = self.depth(node.right)
+
+    if re1 and re2 and abs(val1 - val2) &lt; 2:
+
+        return True, max(val1, val2)+1
+
+    return False, max(val1, val2)+1
+
+
+
+def isBalanced(self, root):
+
+    """
+
+    :type root: TreeNode
+
+    :rtype: bool
+
+    """
+
+    if root is None: return True
+
+    re1, val1 = self.depth(root.left)
+
+    re2, val2 = self.depth(root.right)
+
+    if re1 and re2 and abs(val1 - val2) &lt; 2:
+
+        return True
+
+    return False
+</code></pre>
+
+<h3>第十三题 Flatten Binary Tree to Linked List</h3>
+
+<p>Given a binary tree, flatten it to a linked list in-place.</p>
+
+<p>For example,
+Given</p>
+
+<pre><code>     1
+    / \
+   2   5
+  / \   \
+ 3   4   6
+</code></pre>
+
+<p>The flattened tree should look like:</p>
+
+<pre><code>   1
+    \
+     2
+      \
+       3
+        \
+         4
+          \
+           5
+            \
+             6
+</code></pre>
+
+<h3>解法</h3>
+
+<p>这里对递归处理得非常好。</p>
+
+<pre><code>class Solution(object):
+
+
+
+def flatten(self, root):
+
+    self.flattenTree(root)    
+
+
+
+def flattenTree(self, root):
+
+    """
+
+    :type root: TreeNode
+
+    :rtype: void Do not return anything, modify root in-place instead.
+
+    """
+
+    if not root: return None, None
+
+    leftHead, leftTail = self.flattenTree(root.left)
+
+    rightHead, rightTail = self.flattenTree(root.right)
+
+
+
+    if not leftHead and not rightHead:
+
+        return root, root
+
+    elif leftHead and not rightHead:
+
+        root.left = None
+
+        root.right = leftHead
+
+        return root, leftTail
+
+    elif not leftHead and rightHead:
+
+        return root, rightTail
+
+    else:
+
+        root.right = leftHead
+
+        root.left = None
+
+        leftTail.right = rightHead
+
+        return root, rightTail
+</code></pre>
+
+<h3>第十四题 Populating Next Right Pointers in Each Node II</h3>
+
+<p>Follow up for problem "Populating Next Right Pointers in Each Node".</p>
+
+<p>What if the given tree could be any binary tree? Would your previous solution still work?</p>
+
+<p>Note:</p>
+
+<p>You may only use constant extra space.
+For example,
+Given the following binary tree,</p>
+
+<pre><code>     1
+   /  \
+  2    3
+ / \    \
+4   5    7
+</code></pre>
+
+<p>After calling your function, the tree should look like:</p>
+
+<pre><code>     1 -&gt; NULL
+   /  \
+  2 -&gt; 3 -&gt; NULL
+ / \    \
+4-&gt; 5 -&gt; 7 -&gt; NULL
+</code></pre>
+
+<h3>解法</h3>
+
+<pre><code>class Solution:
+
+# @param root, a tree link node
+
+# @return nothing
+
+def connect(self, root):
+
+    if not root: return
+
+    stack = []
+
+    stack.append(root)
+
+    while stack:
+
+        cur = []
+
+        nextLine = []
+
+        while stack:
+
+            tmp = stack[0]
+
+            stack = stack[1:]
+
+            if tmp.left:
+
+                nextLine.append(tmp.left)
+
+            if tmp.right:
+
+                nextLine.append(tmp.right)
+
+            cur.append(tmp)
+
+        for i in range(len(cur)):
+
+            if i != len(cur)-1:
+
+                cur[i].next = cur[i+1]
+
+            else:
+
+                cur[i].next = None
+
+        stack = nextLine
+
+        cur = nextLine = []
+
+    return 
+</code></pre>
+</body>
+</html>

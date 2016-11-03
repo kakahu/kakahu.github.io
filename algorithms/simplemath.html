@@ -1,0 +1,710 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<style>
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote {
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", Arial, sans-serif;
+    font-size: 13px;
+    line-height: 18px;
+    color: #737373;
+    background-color: white;
+    margin: 10px 13px 10px 13px;
+}
+table {
+	margin: 10px 0 15px 0;
+	border-collapse: collapse;
+}
+td,th {	
+	border: 1px solid #ddd;
+	padding: 3px 10px;
+}
+th {
+	padding: 5px 10px;	
+}
+
+a {
+    color: #0069d6;
+}
+a:hover {
+    color: #0050a3;
+    text-decoration: none;
+}
+a img {
+    border: none;
+}
+p {
+    margin-bottom: 9px;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #404040;
+    line-height: 36px;
+}
+h1 {
+    margin-bottom: 18px;
+    font-size: 30px;
+}
+h2 {
+    font-size: 24px;
+}
+h3 {
+    font-size: 18px;
+}
+h4 {
+    font-size: 16px;
+}
+h5 {
+    font-size: 14px;
+}
+h6 {
+    font-size: 13px;
+}
+hr {
+    margin: 0 0 19px;
+    border: 0;
+    border-bottom: 1px solid #ccc;
+}
+blockquote {
+    padding: 13px 13px 21px 15px;
+    margin-bottom: 18px;
+    font-family:georgia,serif;
+    font-style: italic;
+}
+blockquote:before {
+    content:"\201C";
+    font-size:40px;
+    margin-left:-10px;
+    font-family:georgia,serif;
+    color:#eee;
+}
+blockquote p {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 18px;
+    margin-bottom: 0;
+    font-style: italic;
+}
+code, pre {
+    font-family: Monaco, Andale Mono, Courier New, monospace;
+}
+code {
+    background-color: #fee9cc;
+    color: rgba(0, 0, 0, 0.75);
+    padding: 1px 3px;
+    font-size: 12px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+pre {
+    display: block;
+    padding: 14px;
+    margin: 0 0 18px;
+    line-height: 16px;
+    font-size: 11px;
+    border: 1px solid #d9d9d9;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+pre code {
+    background-color: #fff;
+    color:#737373;
+    font-size: 11px;
+    padding: 0;
+}
+sup {
+    font-size: 0.83em;
+    vertical-align: super;
+    line-height: 0;
+}
+* {
+	-webkit-print-color-adjust: exact;
+}
+@media screen and (min-width: 914px) {
+    body {
+        width: 854px;
+        margin:10px auto;
+    }
+}
+@media print {
+	body,code,pre code,h1,h2,h3,h4,h5,h6 {
+		color: black;
+	}
+	table, pre {
+		page-break-inside: avoid;
+	}
+}
+</style>
+<title>简单数学</title>
+
+</head>
+<body>
+<h1>简单数学</h1>
+
+<p><a href="../index.html">返回首页</a></p>
+
+<p><a href="./algorithmsIndex.html">返回算法分类分析</a></p>
+
+<h3>第一题 Pascal's Triangle</h3>
+
+<p>Given numRows, generate the first numRows of Pascal's triangle.</p>
+
+<p>For example, given numRows = 5,</p>
+
+<p>Return</p>
+
+<pre><code>[   
+     [1],
+    [1,1],
+   [1,2,1],
+  [1,3,3,1],
+ [1,4,6,4,1]
+]
+</code></pre>
+
+<h3>解法</h3>
+
+<p>解法相对简单，根据规律写出就可以了。</p>
+
+<pre><code>class Solution(object):
+
+def generate(self, numRows):
+
+    """
+
+    :type numRows: int
+
+    :rtype: List[List[int]]
+
+    """
+
+    if numRows == 0: return []
+
+    if numRows == 1: return [[1]]
+
+    re = []
+
+    re.append([1])
+
+    for i in range(1,numRows):
+
+        oneline = []
+
+        oneline.append(1)
+
+        for j in range(1,i):
+
+            oneline.append(re[i-1][j-1]+re[i-1][j])
+
+        oneline.append(1)
+
+        re.append(oneline)
+
+    return re   
+</code></pre>
+
+<h3>第二题 Pascal's Triangle II</h3>
+
+<p>Given an index k, return the kth row of the Pascal's triangle.</p>
+
+<p>For example, given k = 3,
+Return [1,3,3,1].</p>
+
+<h3>解法</h3>
+
+<p>参考下面的解法，上一题也可以这么简洁。
+    class Solution(object):</p>
+
+<pre><code>def getRow(self, rowIndex):
+
+    """
+
+    :type rowIndex: int
+
+    :rtype: List[int]
+
+    """
+
+    line = [1]
+
+    for i in xrange(rowIndex):
+
+        line = [1] + [line[k] + line[k+1] for k in xrange(len(line) - 1)] + [1]
+
+    return line
+</code></pre>
+
+<h3>第三题 Pow(x, n)</h3>
+
+<p>Implement pow(x, n).</p>
+
+<h3>解法</h3>
+
+<p>注意这里对边界、负值和重复计算的处理。</p>
+
+<pre><code>class Solution(object):
+
+def myPow(self, x, n):
+
+    """
+
+    :type x: float
+
+    :type n: int
+
+    :rtype: float
+
+    """
+
+    if n == 0:
+
+        return 1
+
+    if n &lt; 0:
+
+        return 1.0/self.myPow(x,-n)
+
+    if n % 2 == 0:
+
+        re = self.myPow(x,n/2)
+
+        return  re * re
+
+    else:
+
+        return self.myPow(x,n-1) * x
+</code></pre>
+
+<h3>第四题 Reverse Integer</h3>
+
+<p>Reverse digits of an integer.</p>
+
+<p>Example1: x = 123, return 321</p>
+
+<p>Example2: x = -123, return -321</p>
+
+<h3>解法</h3>
+
+<p>注意这里对逆转数的处理rev = rev * 10 + x % 10;</p>
+
+<p>另外对溢出和负数的处理要根据语言的特性来决定。</p>
+
+<pre><code>public class Solution {
+
+    public int reverse(int x) {
+
+        long rev = 0;
+
+        while(x != 0) {
+
+            rev = rev * 10 + x % 10;
+
+            x = x / 10;
+
+            if (rev &gt; Integer.MAX_VALUE || rev &lt; Integer.MIN_VALUE) {
+
+                return 0;
+
+            }
+
+        }
+
+        return (int)rev;
+
+    }
+
+}
+</code></pre>
+
+<h3>第五题 Plus One</h3>
+
+<p>Given a non-negative number represented as an array of digits, plus one to the number.</p>
+
+<p>The digits are stored such that the most significant digit is at the head of the list.</p>
+
+<h3>解法</h3>
+
+<p>range的做法是第一个参数会取到，最后一个参数不会取，注意这里的用法。</p>
+
+<p>另外这里要注意进位的情况。</p>
+
+<pre><code>class Solution(object):
+
+def plusOne(self, digits):
+
+    """
+
+    :type digits: List[int]
+
+    :rtype: List[int]
+
+    """
+
+    l = len(digits)
+
+    carry = 1
+
+    for i in range(l-1,-1,-1):
+
+        if carry + digits[i] == 10:
+
+            digits[i] = 0
+
+            carry = 1
+
+        else:
+
+            carry = 0
+
+            digits[i] = digits[i] + 1
+
+            break
+
+    print carry
+
+    if carry == 1:
+
+        re = [1]
+
+        for i in range(l):
+
+            re.append(0)
+
+        return re
+
+    else:
+
+        return digits
+</code></pre>
+
+<h3>第六题 Unique Paths</h3>
+
+<p>A robot is located at the top-left corner of a m x n grid (marked 'Start' in the diagram below).</p>
+
+<p>The robot can only move either down or right at any point in time. The robot is trying to reach the bottom-right corner of the grid (marked 'Finish' in the diagram below).</p>
+
+<p>How many possible unique paths are there?</p>
+
+<p><img src="./pics/robot_maze.png" alt="" /></p>
+
+<h3>解法</h3>
+
+<p>这里如果使用递归的话，会超时。
+    class Solution(object):</p>
+
+<pre><code>def uniquePaths(self, m, n):
+
+    """
+
+    :type m: int
+
+    :type n: int
+
+    :rtype: int
+
+    """
+
+    if (m == 1 and n == 1) or (m == 1 and n == 2) or (m == 2 and n == 1):
+
+        return 1
+
+    if n == 1:
+
+        return self.uniquePaths(m-1,n)
+
+    if m == 1:
+
+        return self.uniquePaths(m,n-1)
+
+    return self.uniquePaths(m-1,n) + self.uniquePaths(m,n-1)
+</code></pre>
+
+<p>因此考虑数学方法。
+这是一个排列组合的问题。
+C(m-1)(m+n-2)</p>
+
+<pre><code>from math import *
+
+class Solution(object):
+
+def uniquePaths(self, m, n):
+
+    """
+
+    :type m: int
+
+    :type n: int
+
+    :rtype: int
+
+    """
+
+    return factorial(m+n-2)/factorial(n-1)/factorial(m-1)
+</code></pre>
+
+<h3>第七题 Palindrome Number</h3>
+
+<p>Determine whether an integer is a palindrome. Do this without extra space.</p>
+
+<h3>解法</h3>
+
+<pre><code>class Solution(object):
+
+def isPalindrome(self, x):
+
+    """
+
+    :type x: int
+
+    :rtype: bool
+
+    """
+
+    x = str(x)
+
+    l, r = 0, len(x)-1
+
+    while (l &lt; r):
+
+        if not x[l] == x[r]:
+
+            return False
+
+        else:
+
+            l = l + 1
+
+            r = r - 1
+
+
+
+    return True
+</code></pre>
+
+<h3>第八题 Permutation Sequence</h3>
+
+<p>The set [1,2,3,…,n] contains a total of n! unique permutations.</p>
+
+<p>By listing and labeling all of the permutations in order,
+We get the following sequence (ie, for n = 3):</p>
+
+<p>"123"</p>
+
+<p>"132"</p>
+
+<p>"213"</p>
+
+<p>"231"</p>
+
+<p>"312"</p>
+
+<p>"321"</p>
+
+<p>Given n and k, return the kth permutation sequence.</p>
+
+<h3>解法</h3>
+
+<p>这里注意对问题的数学化的处理。</p>
+
+<pre><code>class Solution(object):
+
+def getPermutation(self, n, k):
+
+    """
+
+    :type n: int
+
+    :type k: int
+
+    :rtype: str
+
+    """
+
+    total = 1
+
+    factorial = [1]
+
+    for i in range(1,n+1):
+
+        total = total * i
+
+        factorial.insert(i,total)
+
+
+
+    numbers = range(1,n+1)
+
+
+
+    k = k - 1
+
+
+
+    re = ''
+
+
+
+    for i in range(1,n+1):
+
+        index = k/factorial[n-i]
+
+        re = re + str(numbers[index])
+
+        numbers.remove(numbers[index])
+
+        k = k - index * factorial[n-i]
+
+
+
+    return re
+</code></pre>
+
+<h3>第九题 Merge Intervals</h3>
+
+<p>Given a collection of intervals, merge all overlapping intervals.</p>
+
+<p>For example,</p>
+
+<p>Given [1,3],[2,6],[8,10],[15,18],</p>
+
+<p>return [1,6],[8,10],[15,18].</p>
+
+<h3>解法</h3>
+
+<p>注意到根据起始位置排序后，融合的情况只可能发生在前后的两个interval之间。使用一个堆栈即可处理连续的融合。注意一下这里使用lambda表达式实现的排序。</p>
+
+<pre><code># Definition for an interval.
+
+# class Interval(object):
+
+#     def __init__(self, s=0, e=0):
+
+#         self.start = s
+
+#         self.end = e
+
+
+
+class Solution(object):
+
+def merge(self, intervals):
+
+    """
+
+    :type intervals: List[Interval]
+
+    :rtype: List[Interval]
+
+    """
+
+    if len(intervals) &lt; 2:
+
+        return intervals
+
+
+
+    intervals.sort(key=lambda intervals: intervals.start)
+
+    stack = []
+
+    stack.append(intervals[0])
+
+    l = len(intervals)
+
+
+
+    for i in range(1, l):
+
+        if stack[-1].end &gt;= intervals[i].start:
+
+            tmp = stack.pop()
+
+            interval = Interval(tmp.start, max(tmp.end, intervals[i].end))
+
+            stack.append(interval)
+
+        else:
+
+            stack.append(intervals[i])
+
+
+
+    return stack
+</code></pre>
+
+<h3>第十题 Climbing Stairs</h3>
+
+<p>You are climbing a stair case. It takes n steps to reach to the top.</p>
+
+<p>Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?</p>
+
+<h3>解法</h3>
+
+<p>递归可以做。如下：</p>
+
+<pre><code>class Solution(object):
+
+def climbStairs(self, n):
+
+    """
+
+    :type n: int
+
+    :rtype: int
+
+    """
+
+    if n == 1:
+
+        return 1
+
+    elif n == 2:
+
+        return 2
+
+    else:
+
+        return self.climbStairs(n-1) + self.climbStairs(n-2)
+</code></pre>
+
+<p>或者用数学的方法来做也可以，斐波那契数列：</p>
+
+<pre><code>class Solution(object):
+
+def climbStairs(self, n):
+
+    """
+
+    :type n: int
+
+    :rtype: int
+
+    """
+
+    fab = [1,2]
+
+    for i in range(2,n):
+
+        fab.append(fab[i-1]+fab[i-2])
+
+    return fab[n-1]
+</code></pre>
+</body>
+</html>

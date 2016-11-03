@@ -1,0 +1,1338 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<style>
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote {
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", Arial, sans-serif;
+    font-size: 13px;
+    line-height: 18px;
+    color: #737373;
+    background-color: white;
+    margin: 10px 13px 10px 13px;
+}
+table {
+	margin: 10px 0 15px 0;
+	border-collapse: collapse;
+}
+td,th {	
+	border: 1px solid #ddd;
+	padding: 3px 10px;
+}
+th {
+	padding: 5px 10px;	
+}
+
+a {
+    color: #0069d6;
+}
+a:hover {
+    color: #0050a3;
+    text-decoration: none;
+}
+a img {
+    border: none;
+}
+p {
+    margin-bottom: 9px;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #404040;
+    line-height: 36px;
+}
+h1 {
+    margin-bottom: 18px;
+    font-size: 30px;
+}
+h2 {
+    font-size: 24px;
+}
+h3 {
+    font-size: 18px;
+}
+h4 {
+    font-size: 16px;
+}
+h5 {
+    font-size: 14px;
+}
+h6 {
+    font-size: 13px;
+}
+hr {
+    margin: 0 0 19px;
+    border: 0;
+    border-bottom: 1px solid #ccc;
+}
+blockquote {
+    padding: 13px 13px 21px 15px;
+    margin-bottom: 18px;
+    font-family:georgia,serif;
+    font-style: italic;
+}
+blockquote:before {
+    content:"\201C";
+    font-size:40px;
+    margin-left:-10px;
+    font-family:georgia,serif;
+    color:#eee;
+}
+blockquote p {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 18px;
+    margin-bottom: 0;
+    font-style: italic;
+}
+code, pre {
+    font-family: Monaco, Andale Mono, Courier New, monospace;
+}
+code {
+    background-color: #fee9cc;
+    color: rgba(0, 0, 0, 0.75);
+    padding: 1px 3px;
+    font-size: 12px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+pre {
+    display: block;
+    padding: 14px;
+    margin: 0 0 18px;
+    line-height: 16px;
+    font-size: 11px;
+    border: 1px solid #d9d9d9;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+pre code {
+    background-color: #fff;
+    color:#737373;
+    font-size: 11px;
+    padding: 0;
+}
+sup {
+    font-size: 0.83em;
+    vertical-align: super;
+    line-height: 0;
+}
+* {
+	-webkit-print-color-adjust: exact;
+}
+@media screen and (min-width: 914px) {
+    body {
+        width: 854px;
+        margin:10px auto;
+    }
+}
+@media print {
+	body,code,pre code,h1,h2,h3,h4,h5,h6 {
+		color: black;
+	}
+	table, pre {
+		page-break-inside: avoid;
+	}
+}
+</style>
+<title>链表</title>
+
+</head>
+<body>
+<h1>链表</h1>
+
+<p><a href="../index.html">返回首页</a></p>
+
+<p><a href="./algorithmsIndex.html">返回算法分类分析</a></p>
+
+<h3>第一题 Sort List</h3>
+
+<p>Sort a linked list in O(n log n) time using constant space complexity.</p>
+
+<h3>解法</h3>
+
+<p>使用归并排序，将节点分到三个排序中去。注意这里对空链表头的处理。</p>
+
+<pre><code>    # Definition for singly-linked list.
+    # class ListNode(object):
+    #     def __init__(self, x):
+    #         self.val = x
+    #         self.next = None
+
+class Solution(object):
+    def sortList(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        if head is None or head.next is None:
+            return head
+
+        x = head.val
+        h1 = ListNode(None)
+        c1 = h1
+        h2 = ListNode(None)
+        c2 = h2
+        h3 = ListNode(None)
+        c3 = h3
+
+        c = head
+        while c is not None:
+            if c.val &lt; x:
+                c1.next = c
+                c = c.next
+                c1 = c1.next
+                c1.next = None
+            elif c.val &gt; x:
+                c2.next = c
+                c = c.next
+                c2 = c2.next
+                c2.next = None
+            else:
+                c3.next = c
+                c = c.next
+                c3 = c3.next
+                c3.next = None
+
+        h1 = self.sortList(h1.next)
+        h2 = self.sortList(h2.next)
+
+        if h1 is None:
+            c3.next = h2
+            return h3.next
+        else:
+            tmp = h1
+            while tmp.next is not None:
+                tmp = tmp.next
+            tmp.next = h3.next
+            c3.next = h2
+            return h1
+</code></pre>
+
+<h3>第二题 Insertion Sort List</h3>
+
+<p>Sort a linked list using insertion sort.</p>
+
+<h3>解法</h3>
+
+<p>插入排序：遍历数组，每遇到一个元素，就插入到已经排好序的部分中合适的位置。</p>
+
+<pre><code>class Solution(object):
+
+def insertionSortList(self, head):
+
+    """
+
+    :type head: ListNode
+
+    :rtype: ListNode
+
+    """
+
+    if head is None or head.next is None:
+
+        return head
+
+
+
+    pre_head = ListNode(None)
+
+    pre_head.next = head
+
+    sorted_end, cur = head, head.next
+
+    while cur:
+
+        if cur.val &gt;= sorted_end.val:
+
+            sorted_end, cur = sorted_end.next, cur.next
+
+        else:
+
+            pre, ptr = pre_head, pre_head.next
+
+            while cur.val &gt;= ptr.val:
+
+                pre, ptr = pre.next, ptr.next
+
+            sorted_end.next, pre.next, cur.next, cur = cur.next, cur, ptr, sorted_end.next.next
+
+    return pre_head.next
+</code></pre>
+
+<h3>第三题 Reorder List</h3>
+
+<p>Given a singly linked list L: L0→L1→…→Ln-1→Ln,
+reorder it to: L0→Ln→L1→Ln-1→L2→Ln-2→…</p>
+
+<p>You must do this in-place without altering the nodes' values.</p>
+
+<p>For example,
+Given {1,2,3,4}, reorder it to {1,4,2,3}.</p>
+
+<h3>解法</h3>
+
+<p>注意这里对解法的拆解，以及对多个返回的处理。</p>
+
+<pre><code># Definition for singly-linked list.
+
+# class ListNode(object):
+
+#     def __init__(self, x):
+
+#         self.val = x
+
+#         self.next = None
+
+
+
+class Solution(object):
+
+def reorderList(self, head):
+
+    """
+
+    :type head: ListNode
+
+    :rtype: void Do not return anything, modify head in-place instead.
+
+    """
+
+    h1, h2 = self.splitToHalves(head)
+
+    h2 = self.reverse(h2)
+
+    self.merge(h1, h2)
+
+
+
+def splitToHalves(self, head):
+
+    if head is None or head.next is None:
+
+        return head, None
+
+    ptr = head
+
+    n = 0
+
+    while ptr:
+
+        n += 1
+
+        ptr = ptr.next
+
+    half = (n+1) / 2
+
+    ptr = head
+
+#        print n, half
+
+    while half &gt; 1:
+
+        ptr = ptr.next
+
+        half -= 1
+
+
+
+    tmp = ptr.next
+
+    ptr.next = None
+
+    return head, tmp
+
+
+
+
+
+def reverse(self, head):
+
+    if head is None or head.next is None:
+
+        return head
+
+    p1, p2 = head, head.next
+
+    p1.next = None
+
+    while p2:
+
+        tmp = p2.next
+
+        p2.next = p1
+
+        p1 = p2
+
+        p2 = tmp
+
+    return p1
+
+
+
+
+
+def merge(self, head1, head2):
+
+    self.printList(head1)
+
+    self.printList(head2)
+
+    if head1 is None:
+
+        return head1
+
+    p1, p2 = head1.next, head2
+
+    h = head1
+
+    while h:
+
+        if p2:
+
+            h.next = p2
+
+        else: 
+
+            break
+
+        p2 = p2.next
+
+        if p1:
+
+            h.next.next = p1
+
+        else:
+
+            break
+
+        p1 = p1.next
+
+        h = h.next.next
+
+
+
+def printList(self, head):
+
+    while head:
+
+        print head.val
+
+        head = head.next
+</code></pre>
+
+<h3>第四题 Linked List Cycle</h3>
+
+<p>Given a linked list, determine if it has a cycle in it.</p>
+
+<p>Follow up:
+Can you solve it without using extra space?</p>
+
+<h3>解法</h3>
+
+<p>如果有环，那么一块一慢的循环一定会有套圈。</p>
+
+<pre><code># Definition for singly-linked list.
+
+# class ListNode(object):
+
+#     def __init__(self, x):
+
+#         self.val = x
+
+#         self.next = None
+
+
+
+class Solution(object):
+
+def hasCycle(self, head):
+
+    """
+
+    :type head: ListNode
+
+    :rtype: bool
+
+    """
+
+    if head is None or head.next is None:
+
+        return False
+
+    fast, slow = head.next, head
+
+    while fast is not None and fast.next is not None and fast != slow:
+
+        fast = fast.next.next
+
+        slow = slow.next
+
+
+
+    if fast == slow:
+
+        return True
+
+    else:
+
+        return False
+</code></pre>
+
+<h3>第五题 Linked List Cycle II</h3>
+
+<p>Given a linked list, return the node where the cycle begins. If there is no cycle, return null.</p>
+
+<p>Note: Do not modify the linked list.</p>
+
+<h3>解法</h3>
+
+<p>数学方法</p>
+
+<pre><code>class Solution(object):
+def detectCycle(self, head):
+    slow, fast = head, head
+    while True:
+        if fast == None or fast.next == None: return None
+        slow = slow.next; fast = fast.next.next
+        if slow == fast: break
+    while head != fast:
+        head = head.next; fast = fast.next
+    return head
+</code></pre>
+
+<h3>第六题 Copy List with Random Pointer</h3>
+
+<p>A linked list is given such that each node contains an additional random pointer which could point to any node in the list or null.</p>
+
+<p>Return a deep copy of the list.</p>
+
+<h3>解法</h3>
+
+<p>先在原来链表的每一个节点后插入新建的节点，然后复制random，最后拆解出来。</p>
+
+<pre><code># Definition for singly-linked list with a random pointer.
+
+# class RandomListNode(object):
+
+#     def __init__(self, x):
+
+#         self.label = x
+
+#         self.next = None
+
+#         self.random = None
+
+
+
+class Solution(object):
+
+    def copyRandomList(self, head):
+
+    """
+
+    :type head: RandomListNode
+
+    :rtype: RandomListNode
+
+    """
+
+    if not head:
+
+        return head
+
+
+
+    ptr = head
+
+    while ptr:
+
+        realNext = ptr.next
+
+        fakeNext = RandomListNode(ptr.label)
+
+        ptr.next = fakeNext
+
+        fakeNext.next = realNext
+
+        ptr = ptr.next.next
+
+
+
+    ptr = head
+
+    while ptr:
+
+        if ptr.random:
+
+            ptr.next.random = ptr.random.next
+
+        ptr = ptr.next.next
+
+
+
+    ptr = head
+
+    fakeHead = RandomListNode(0)
+
+    fptr = fakeHead
+
+    while ptr:
+
+        fptr.next = ptr.next
+
+        ptr.next = ptr.next.next
+
+        ptr = ptr.next
+
+        fptr = fptr.next
+
+
+
+    return fakeHead.next   
+</code></pre>
+
+<h3>第七题 Rotate List</h3>
+
+<p>Given a list, rotate the list to the right by k places, where k is non-negative.</p>
+
+<p>For example:
+Given 1->2->3->4->5->NULL and k = 2,
+return 4->5->1->2->3->NULL.</p>
+
+<h3>解法</h3>
+
+<p>注意对 k = k % n 的处理。</p>
+
+<pre><code>class Solution(object):
+
+def rotateRight(self, head, k):
+
+    """
+
+    :type head: ListNode
+
+    :type k: int
+
+    :rtype: ListNode
+
+    """
+
+    ptr = head
+
+    n = 0
+
+    while ptr:
+
+        n += 1
+
+        ptr = ptr.next
+
+    if n == 0 or n == 1:
+
+        return head
+
+
+
+    k = k % n
+
+
+
+    if k == 0:
+
+        return head
+
+
+
+    start = n - k
+
+    ptr = head
+
+    while start &gt; 1:
+
+        ptr = ptr.next
+
+        start -= 1
+
+
+
+    newHead = ptr.next
+
+    tail = newHead
+
+    while tail.next:
+
+        tail = tail.next
+
+    tail.next = head
+
+    ptr.next = None
+
+    return newHead
+</code></pre>
+
+<h3>第八题 Remove Duplicates from Sorted List</h3>
+
+<p>Given a sorted linked list, delete all duplicates such that each element appear only once.</p>
+
+<p>For example,
+Given 1->1->2, return 1->2.
+Given 1->1->2->3->3, return 1->2->3.</p>
+
+<h3>解法</h3>
+
+<pre><code># Definition for singly-linked list.
+
+# class ListNode(object):
+
+#     def __init__(self, x):
+
+#         self.val = x
+
+#         self.next = None
+
+
+
+class Solution(object):
+
+def deleteDuplicates(self, head):
+
+    """
+
+    :type head: ListNode
+
+    :rtype: ListNode
+
+    """
+
+    if not head or not head.next:
+
+        return head
+
+
+
+    ptr1, ptr2 = head, head.next
+
+    while ptr2:
+
+        while ptr2.val == ptr1.val and ptr2.next is not None:
+
+            ptr2 = ptr2.next
+
+        if ptr2.next is None and ptr2.val == ptr1.val:
+
+            ptr1.next = None
+
+            return head
+
+        elif ptr2.next is None and ptr2.val != ptr1.val:
+
+            ptr1.next = ptr2
+
+            return head
+
+        else:
+
+            ptr1.next = ptr2
+
+            ptr1 = ptr2
+
+            ptr2 = ptr2.next
+</code></pre>
+
+<h3>第九题 Remove Duplicates from Sorted List II</h3>
+
+<p>Given a sorted linked list, delete all nodes that have duplicate numbers, leaving only distinct numbers from the original list.</p>
+
+<p>For example,
+Given 1->2->3->3->4->4->5, return 1->2->5.
+Given 1->1->1->2->3, return 2->3.</p>
+
+<h3>解法</h3>
+
+<p>这里又一次使用了自己构造虚拟链表头的方法，极大地简化的问题的解法。</p>
+
+<pre><code>class Solution(object):
+
+def deleteDuplicates(self, head):
+
+    """
+
+    :type head: ListNode
+
+    :rtype: ListNode
+
+    """
+
+    if head is None or head.next is None:
+
+        return head
+
+
+
+    dummy = ListNode(-999999)
+
+    dummy.next = head
+
+
+
+    cur = head
+
+    prev = dummy
+
+    dup = False
+
+
+
+    while cur.next is not None:
+
+        if cur.val == cur.next.val:
+
+            cur = cur.next
+
+            dup = True
+
+        else:
+
+            if dup:
+
+                prev.next = cur.next
+
+                cur = cur.next
+
+                dup = False
+
+            else:
+
+                prev = cur
+
+                cur = cur.next
+
+    if dup:
+
+        prev.next = None
+
+    return dummy.next
+</code></pre>
+
+<h3>第十题 Partition List</h3>
+
+<p>Given a linked list and a value x, partition it such that all nodes less than x come before nodes greater than or equal to x.</p>
+
+<p>You should preserve the original relative order of the nodes in each of the two partitions.</p>
+
+<p>For example,
+Given 1->4->3->2->5->2 and x = 3,
+return 1->2->2->4->3->5.</p>
+
+<h3>解法</h3>
+
+<p>同样使用虚拟表头的方法。</p>
+
+<pre><code>class Solution(object):
+
+def partition(self, head, x):
+
+    """
+
+    :type head: ListNode
+
+    :type x: int
+
+    :rtype: ListNode
+
+    """
+
+    if head is None or head.next is None:
+
+        return head
+
+
+
+    less = ListNode(0)
+
+    lessPtr = less
+
+    greater = ListNode(0)
+
+    greaterPtr = greater
+
+    ptr = head
+
+    while ptr:
+
+        if ptr.val &lt; x:
+
+            lessPtr.next = ptr
+
+            ptr = ptr.next
+
+            lessPtr = lessPtr.next
+
+            lessPtr.next = None
+
+        else:
+
+            greaterPtr.next = ptr
+
+            ptr = ptr.next
+
+            greaterPtr = greaterPtr.next
+
+            greaterPtr.next = None
+
+
+
+    lessPtr.next = greater.next
+
+    return less.next
+</code></pre>
+
+<h3>第十一题 Swap Nodes in Pairs</h3>
+
+<p>Given a linked list, swap every two adjacent nodes and return its head.</p>
+
+<p>For example,
+Given 1->2->3->4, you should return the list as 2->1->4->3.</p>
+
+<p>Your algorithm should use only constant space. You may not modify the values in the list, only nodes itself can be changed.</p>
+
+<h3>解法</h3>
+
+<p>又是一个使用虚拟头的例子，注意在设置这类的情况下，最好标志位ptr自己站在已经完成好处理的段的尾节点上。</p>
+
+<pre><code>class Solution(object):
+
+def swapPairs(self, head):
+
+    """
+
+    :type head: ListNode
+
+    :rtype: ListNode
+
+    """
+
+    dummy = ListNode(0)
+
+    dummy.next = head
+
+    ptr = dummy
+
+    while ptr.next is not None and ptr.next.next is not None:
+
+        tmp = ptr.next.next
+
+        ptr.next.next = tmp.next
+
+        tmp.next = ptr.next
+
+        ptr.next = tmp
+
+        ptr = ptr.next.next
+
+    return dummy.next
+</code></pre>
+
+<h3>第十二题 Merge Two Sorted Lists</h3>
+
+<p>Merge two sorted linked lists and return it as a new list. The new list should be made by splicing together the nodes of the first two lists.</p>
+
+<h3>解法</h3>
+
+<pre><code>class Solution(object):
+
+def mergeTwoLists(self, l1, l2):
+
+    """
+
+    :type l1: ListNode
+
+    :type l2: ListNode
+
+    :rtype: ListNode
+
+    """
+
+    dummy = ListNode(0)
+
+    ptr = dummy
+
+    while l1 is not None and l2 is not None:
+
+        if l1.val &lt; l2.val:
+
+            ptr.next = l1
+
+            l1 = l1.next
+
+            ptr = ptr.next
+
+            ptr.next = None
+
+        else:
+
+            ptr.next = l2
+
+            l2 = l2.next
+
+            ptr = ptr.next
+
+            ptr.next = None
+
+    if l1 is None:
+
+        ptr.next = l2
+
+        return dummy.next
+
+    else:
+
+        ptr.next = l1
+
+        return dummy.next
+</code></pre>
+
+<h3>第十三题 Merge k Sorted Lists</h3>
+
+<p>Merge k sorted linked lists and return it as one sorted list. Analyze and describe its complexity.</p>
+
+<h3>解法</h3>
+
+<p>这里使用了heap,注意python中heap的用法。另外这里可以用虚拟表头来简化代码。</p>
+
+<pre><code>from heapq import heapify, heappop, heappush
+
+class Solution(object):
+
+def mergeKLists(self, lists):
+
+    """
+
+    :type lists: List[ListNode]
+
+    :rtype: ListNode
+
+    """
+
+
+
+    h = [(l.val, l) for l in lists if l]
+
+    heapify(h)
+
+    new_head = current = None
+
+    while len(h):
+
+        val, node = heappop(h)
+
+        if node.next:
+
+            heappush(h, (node.next.val, node.next))
+
+        if not new_head:
+
+            current = new_head = node
+
+        else:
+
+            current.next = node
+
+            current = node
+
+            node.next = None
+
+    return new_head
+</code></pre>
+
+<h3>第十四题 Reverse Nodes in k-Group</h3>
+
+<p>Given a linked list, reverse the nodes of a linked list k at a time and return its modified list.</p>
+
+<p>If the number of nodes is not a multiple of k then left-out nodes in the end should remain as it is.</p>
+
+<p>You may not alter the values in the nodes, only nodes itself may be changed.</p>
+
+<p>Only constant memory is allowed.</p>
+
+<p>For example,
+Given this linked list: 1->2->3->4->5</p>
+
+<p>For k = 2, you should return: 2->1->4->3->5</p>
+
+<p>For k = 3, you should return: 3->2->1->4->5</p>
+
+<h3>解法</h3>
+
+<pre><code>class Solution(object):
+
+
+
+def reverse(self, head, n):
+
+    assert n &gt; 0
+
+    assert head is not None
+
+
+
+    tail = head
+
+    current = head.next
+
+    length = n
+
+    n -= 1
+
+
+
+    while n &gt; 0 and current is not None:
+
+        next = current.next
+
+        current.next = head
+
+        head = current
+
+        current = next
+
+        n -= 1
+
+
+
+    tail.next = current
+
+    return (head, tail, length - n)
+
+
+
+
+
+def reverseKGroup(self, head, k):
+
+    """
+
+    :type head: ListNode
+
+    :type k: int
+
+    :rtype: ListNode
+
+    """
+
+    dummy = ListNode(None)
+
+    dummy.next = head
+
+    current = dummy
+
+
+
+    while current is not None and current.next is not None:
+
+        sublist = self.reverse(current.next, k)
+
+        if sublist[2] != k:
+
+            sublist = self.reverse(sublist[0],k)
+
+        current.next= sublist[0]
+
+        current = sublist[1]
+
+
+
+    return dummy.next
+</code></pre>
+
+<h3>第十五题 Remove Nth Node From End of List</h3>
+
+<p>Given a linked list, remove the nth node from the end of list and return its head.</p>
+
+<p>For example,</p>
+
+<p>   Given linked list: 1->2->3->4->5, and n = 2.</p>
+
+<p>   After removing the second node from the end, the linked list becomes 1->2->3->5.</p>
+
+<p>Note:</p>
+
+<p>Given n will always be valid.</p>
+
+<p>Try to do this in one pass.</p>
+
+<h3>解法</h3>
+
+<pre><code>这里也用到了虚拟头。
+
+
+class Solution(object):
+
+def removeNthFromEnd(self, head, n):
+
+    """
+
+    :type head: ListNode
+
+    :type n: int
+
+    :rtype: ListNode
+
+    """
+
+    dummy = ListNode(0)
+
+    dummy.next = head
+
+    tmp = dummy
+
+    ptr = dummy
+
+    while n &gt; 0:
+
+        ptr = ptr.next
+
+        n -= 1
+
+    while ptr.next:
+
+        ptr = ptr.next
+
+        tmp = tmp.next
+
+
+
+    tmp.next = tmp.next.next
+
+    return dummy.next
+</code></pre>
+
+<h3>第十六题 Reverse Linked List II</h3>
+
+<p>Reverse a linked list from position m to n. Do it in-place and in one-pass.</p>
+
+<p>For example:
+Given 1->2->3->4->5->NULL, m = 2 and n = 4,</p>
+
+<p>return 1->4->3->2->5->NULL.</p>
+
+<p>Note:
+Given m, n satisfy the following condition:
+1 ≤ m ≤ n ≤ length of list.</p>
+
+<h3>解法</h3>
+
+<pre><code>class Solution(object):
+
+
+
+def reverse(self, head, n):
+
+    assert n &gt; 0
+
+    assert head is not None
+
+
+
+    tail = head
+
+    current = head.next
+
+    length = n
+
+    n -= 1
+
+
+
+    while n &gt; 0 and current is not None:
+
+        next = current.next
+
+        current.next = head
+
+        head = current
+
+        current = next
+
+        n -= 1
+
+
+
+    tail.next = current
+
+    return (head, tail)
+
+
+
+def reverseBetween(self, head, m, n):
+
+    """
+
+    :type head: ListNode
+
+    :type m: int
+
+    :type n: int
+
+    :rtype: ListNode
+
+    """
+
+    dummy = ListNode(0)
+
+    dummy.next = head
+
+    ptr = dummy
+
+    mm = m
+
+    while mm &gt; 1:
+
+        ptr = ptr.next
+
+        mm -= 1
+
+
+
+    nn = n
+
+    end = dummy
+
+    while nn &gt;= 0:
+
+        end = end.next
+
+        nn -= 1
+
+
+
+    length = n - m + 1
+
+    re = self.reverse(ptr.next, length)
+
+    ptr.next, re[1].next = re[0], end
+
+
+
+    return dummy.next
+</code></pre>
+</body>
+</html>

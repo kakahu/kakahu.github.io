@@ -1,0 +1,273 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<style>
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote {
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", Arial, sans-serif;
+    font-size: 13px;
+    line-height: 18px;
+    color: #737373;
+    background-color: white;
+    margin: 10px 13px 10px 13px;
+}
+table {
+	margin: 10px 0 15px 0;
+	border-collapse: collapse;
+}
+td,th {	
+	border: 1px solid #ddd;
+	padding: 3px 10px;
+}
+th {
+	padding: 5px 10px;	
+}
+
+a {
+    color: #0069d6;
+}
+a:hover {
+    color: #0050a3;
+    text-decoration: none;
+}
+a img {
+    border: none;
+}
+p {
+    margin-bottom: 9px;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #404040;
+    line-height: 36px;
+}
+h1 {
+    margin-bottom: 18px;
+    font-size: 30px;
+}
+h2 {
+    font-size: 24px;
+}
+h3 {
+    font-size: 18px;
+}
+h4 {
+    font-size: 16px;
+}
+h5 {
+    font-size: 14px;
+}
+h6 {
+    font-size: 13px;
+}
+hr {
+    margin: 0 0 19px;
+    border: 0;
+    border-bottom: 1px solid #ccc;
+}
+blockquote {
+    padding: 13px 13px 21px 15px;
+    margin-bottom: 18px;
+    font-family:georgia,serif;
+    font-style: italic;
+}
+blockquote:before {
+    content:"\201C";
+    font-size:40px;
+    margin-left:-10px;
+    font-family:georgia,serif;
+    color:#eee;
+}
+blockquote p {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 18px;
+    margin-bottom: 0;
+    font-style: italic;
+}
+code, pre {
+    font-family: Monaco, Andale Mono, Courier New, monospace;
+}
+code {
+    background-color: #fee9cc;
+    color: rgba(0, 0, 0, 0.75);
+    padding: 1px 3px;
+    font-size: 12px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+pre {
+    display: block;
+    padding: 14px;
+    margin: 0 0 18px;
+    line-height: 16px;
+    font-size: 11px;
+    border: 1px solid #d9d9d9;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+pre code {
+    background-color: #fff;
+    color:#737373;
+    font-size: 11px;
+    padding: 0;
+}
+sup {
+    font-size: 0.83em;
+    vertical-align: super;
+    line-height: 0;
+}
+* {
+	-webkit-print-color-adjust: exact;
+}
+@media screen and (min-width: 914px) {
+    body {
+        width: 854px;
+        margin:10px auto;
+    }
+}
+@media print {
+	body,code,pre code,h1,h2,h3,h4,h5,h6 {
+		color: black;
+	}
+	table, pre {
+		page-break-inside: avoid;
+	}
+}
+</style>
+<title>简单编程</title>
+
+</head>
+<body>
+<h1>简单编程</h1>
+
+<p><a href="../index.html">返回首页</a></p>
+
+<p><a href="./algorithmsIndex.html">返回算法分类分析</a></p>
+
+<h3>第一题 Longest Common Prefix</h3>
+
+<p>Write a function to find the longest common prefix string amongst an array of strings.</p>
+
+<h3>解法</h3>
+
+<p>想法比较直接，注意这里shortest的使用方法和min的使用方法。
+class Solution(object):</p>
+
+<pre><code>def longestCommonPrefix(self, strs):
+
+    """
+
+    :type strs: List[str]
+
+    :rtype: str
+
+    """
+
+    if not strs:
+
+        return ""
+
+    shortest = min(strs, key=len)
+
+    for i in range(len(shortest)):
+
+        for s in strs:
+
+            if not s[i] == shortest[i]:
+
+                return shortest[:i]
+
+    return shortest
+</code></pre>
+
+<h3>第二题   String to Integer (atoi)</h3>
+
+<h3>解法</h3>
+
+<p>注意这里一开始对各种情况的处理。
+在if的条件语句中，if 和 else都要出现，详见下面的例子。</p>
+
+<pre><code>class Solution(object):
+
+def myAtoi(self, str):
+
+    """
+
+    :type str: str
+
+    :rtype: int
+
+    """
+
+    if len(str) == 0:
+
+        return 0
+
+
+
+    isNegative, i, result = False, 0, 0
+
+    while i &lt; len(str) and str[i] == ' ': 
+
+        i = i + 1
+
+    if i == len(str):
+
+        return 0
+
+    isNegative = str[i] == '-'
+
+    i += 1 if str[i] == '-' or str[i] == '+' else 0
+
+    cnt = 0
+
+    while i &lt; len(str) and cnt &lt;= 10:
+
+        t = ord(str[i]) - ord('0')
+
+        if 0 &lt;= t &lt;= 9:
+
+            result = result*10 + t
+
+        else:
+
+            break
+
+        i = i + 1
+
+        cnt = cnt + 1
+
+    result = -1 * result if isNegative else result
+
+    if result &gt;= 2147483647:
+
+        return 2147483647
+
+    elif result &lt;= -2147483648:
+
+        return -2147483648
+
+    else:
+
+        return result
+</code></pre>
+</body>
+</html>
